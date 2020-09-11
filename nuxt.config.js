@@ -108,6 +108,31 @@ export default {
       home: '/dashboard',
     },
   },
+  toast: {
+    position: 'bottom-right',
+    keepOnHover: true,
+    iconPack: 'custom-class',
+    containerClass: 'bk-toast',
+    register: [
+      {
+        name: 'loading',
+        message: 'Зареждане...',
+        options: {
+          className: 'loading',
+          icon: 'ri-refresh-line',
+        }
+      },
+      {
+        name: 'serverError',
+        message: 'Няма връзка със сървъра, моля опитайте по-късно!',
+        options: {
+          duration: 10000,
+          type: 'error',
+          icon: 'ri-close-circle-fill'
+        }
+      }
+    ]
+  },
   styleResources: {
     sass: ['~/assets/scss/variables.scss'],
   },
