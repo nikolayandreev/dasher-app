@@ -1,0 +1,52 @@
+/* Shared styles */
+.input-group, .select-group, .textarea-group {
+  font-size: 16px;
+  margin: 0 0 2em 0;
+  label {
+      display: block;
+      font-family: "Fira Sans", sans-serif;
+      font-weight: 500;
+      font-size: 1em;
+      margin-bottom: 0.2em;
+      user-select: none;
+  }
+  .input-wrap, .select-wrap, .textarea-wrap {
+    position:relative;
+    &:after {
+      position: absolute;
+      font-family: "remixicon";
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0.5em;
+      font-size: 1.5em;
+      transition: all 0.3s;
+    }
+    .hint,
+    .error {
+      position: absolute;
+      top: 100%;
+      font-size: 0.8em;
+    }
+    .hint {
+      font-weight: 300;
+      color: #B5B5C3;
+    }
+    .error {
+      font-weight: 500;
+      color: #F64E60;
+    }
+  }
+}
+
+/* Transition fade-up */
+.fade-up-enter-active {
+  transition: all 0.2s ease;
+}
+.fade-up-leave-active {
+  transition: all 0.2s linear;
+}
+.fade-up-enter,
+.fade-up-leave-to {
+  transform: translateY(-5px);
+  opacity: 0;
+}

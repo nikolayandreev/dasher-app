@@ -1,0 +1,64 @@
+<template>
+  <form @submit.prevent="onSubmit">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        placeholder="Enter your email"
+        v-model="loginForm.email"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        placeholder="Enter your password"
+        v-model="loginForm.password"
+      />
+    </div>
+    <button type="submit">Sign in</button>
+  </form>
+</template>
+
+<script>
+export default {
+  auth: 'guest',
+  layout: 'auth',
+  data() {
+    return {
+      formPending: false,
+      loginForm: {
+        email: null,
+        password: null,
+      },
+    }
+  },
+  methods: {
+    showSuccess() {
+      this.$toast.success('Добре дошли отново!', {
+        duration: 3000,
+        icon: { name: 'ri-checkbox-circle-fill' },
+      })
+    },
+    onSubmit() {
+      this.$auth
+        .loginWith('laravelSanctum', {
+          data: this.loginForm,
+        })
+        .then((res) => {
+          this.$auth.setUser(res.data.data)
+          this.showSuccess()
+          return this.$router.push('/dashboard')
+        })
+        .catch((err) => {
+          this.formPending = false
+          if (err.response === 422) {
+            this.errors = 'These credentials does not exist in our records!'
+          }
+        })
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped></style>

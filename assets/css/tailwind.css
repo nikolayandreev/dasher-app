@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+
+/* Ubuntu START */
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Ubuntu-Light'), local('Ubuntu-Light'), url('~assets/fonts/Ubuntu/Ubuntu-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 300;
+    src: local('Ubuntu-LightItalic'), local('Ubuntu-LightItalic'), url('~assets/fonts/Ubuntu/Ubuntu-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Ubuntu-Regular'), local('Ubuntu-Regular'), url('~assets/fonts/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Ubuntu-Italic'), local('Ubuntu-Italic'), url('~assets/fonts/Ubuntu/Ubuntu-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Ubuntu-Medium'), local('Ubuntu-Medium'), url('~assets/fonts/Ubuntu/Ubuntu-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 500;
+    src: local('Ubuntu-MediumItalic'), local('Ubuntu-MediumItalic'), url('~assets/fonts/Ubuntu/Ubuntu-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Ubuntu-Bold'), local('Ubuntu-Bold'), url('~assets/fonts/Ubuntu/Ubuntu-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 600;
+    src: local('Ubuntu-BoldItalic'), local('Ubuntu-BoldItalic'), url('~assets/fonts/Ubuntu/Ubuntu-BoldItalic.ttf') format('truetype');
+}
+/* Ubuntu END */
+
+/* Fira Sans START */
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 200;
+    src: local('FiraSans-ExtraLight'), local('FiraSans-ExtraLight'), url('~assets/fonts/FiraSans/FiraSans-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: italic;
+    font-weight: 200;
+    src: local('FiraSans-ExtraLightItalic'), local('FiraSans-ExtraLightItalic'), url('~assets/fonts/FiraSans/FiraSans-ExtraLightItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('FiraSans-Regular'), local('FiraSans-Regular'), url('~assets/fonts/FiraSans/FiraSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local('FiraSans-Italic'), local('FiraSans-Italic'), url('~assets/fonts/FiraSans/FiraSans-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 500;
+    src: local('FiraSans-Medium'), local('FiraSans-Medium'), url('~assets/fonts/FiraSans/FiraSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: italic;
+    font-weight: 500;
+    src: local('FiraSans-MediumItalic'), local('FiraSans-MediumItalic'), url('~assets/fonts/FiraSans/FiraSans-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: local('FiraSans-Bold'), local('FiraSans-Bold'), url('~assets/fonts/FiraSans/FiraSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: italic;
+    font-weight: 600;
+    src: local('FiraSans-BoldItalic'), local('FiraSans-BoldItalic'), url('~assets/fonts/FiraSans/FiraSans-BoldItalic.ttf') format('truetype');
+}
+/* Fira Sans END */
+
+@tailwind utilities;
