@@ -8,12 +8,3 @@ $warning: #FFA800;
 $info: #1c85d5;
 $dark: #343a40;
 $muted: #B5B5C3;
-
-@keyframes spin {
-    0% {
-        transform:rotate(0deg);
-    }
-    100% {
-        transform:rotate(360deg);
-    }
-}

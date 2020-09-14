@@ -85,9 +85,8 @@ button {
   cursor: pointer;
   transition: all 0.15s ease;
   &:active {
-    box-shadow: inset 0px 0px 8px 2px rgba(55, 55, 55, 0.3);
     transform: scale(0.96);
-    transition: box-shadow 0.3s linear, box-shadow 0.1s ease-in-out;
+    transition: transform 0.1s ease-in-out;
     &.depressed {
       &:active {
         transform: none;
@@ -127,11 +126,11 @@ button {
     line-height: 1;
   }
   $list: (
-    'primary': #3699ff,
-    'warning': #ffa800,
-    'danger': #f64e60,
-    'success': #1bc5bd,
-    'secondary': #e4e6ef,
+    'primary': $primary,
+    'warning': $warning,
+    'danger': $error,
+    'success': $success,
+    'secondary': $secondary,
   );
 
   /* Default */
@@ -157,8 +156,8 @@ button {
   }
   &.primary:hover,
   &.primary.active {
-    background-color: darken(#3699ff, 12%);
-    border-color: darken(#3699ff, 12%);
+    background-color: darken($primary, 12%);
+    border-color: darken($primary, 12%);
   }
 
   /* Light */
@@ -176,10 +175,10 @@ button {
     }
   }
   &.light-warning {
-    background-color: lighten(#ffa800, 40%);
+    background-color: lighten($warning, 40%);
   }
   &.light-success {
-    background-color: lighten(#1bc5bd, 40%);
+    background-color: lighten($success, 40%);
   }
 
   /* Hover-light */
@@ -198,11 +197,11 @@ button {
   }
   &.hover-light-warning:hover,
   &.hover-light-warning.active {
-    background-color: lighten(#ffa800, 40%);
+    background-color: lighten($warning, 40%);
   }
   &.hover-light-success:hover,
   &.hover-light-success.active {
-    background-color: lighten(#1bc5bd, 40%);
+    background-color: lighten($success, 40%);
   }
 
   /* Outlined */
@@ -267,15 +266,6 @@ button {
       }
     }
   }
-  @keyframes pendingSpin {
-    0% {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
-
   /* Types */
   &.tile {
     border-radius: 0;
@@ -316,6 +306,14 @@ button {
         font-size: 1.6em;
       }
     }
+  }
+}
+@keyframes pendingSpin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 </style>

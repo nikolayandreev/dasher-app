@@ -16,23 +16,20 @@
     &.toasted-primary {
       border-radius: 0.25em;
       line-height: 1.1em;
-      background-color: #343a40;
+      background-color: $dark;
       padding: 0.8em 1.5em;
       font-size: 1em;
       font-weight: 400;
       color: #fff;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
       &.success {
-        background: #1BC5BD;
+        background: $success;
       }
       &.error {
-        background: #F64E60;
+        background: $error;
       }
       &.info {
-        background: #1c85d5;
-      }
-      &.warning {
-        background: #FFA800;
+        background: $info;
       }
       i {
         font-size: 2em;
@@ -44,16 +41,13 @@
       font-size: 1em;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
       &.success {
-        background: #1BC5BD;
+        background: $success;
       }
       &.error {
-        background: #F64E60;
+        background: $error;
       }
       &.info {
-        background: #1c85d5;
-      }
-      &.warning {
-        background: #FFA800;
+        background: $info;
       }
       .action {
         color: #fff;
@@ -72,16 +66,16 @@
       font-weight: 400;
 
       &.success {
-        color: #1BC5BD;
-        border-color: #1BC5BD;
+        color: $success;
+        border-color: $success;
       }
       &.error {
-        color: #F64E60;
-        border-color: #F64E60;
+        color: $error;
+        border-color: $error;
       }
       &.info {
-        color: #1c85d5;
-        border-color: #1c85d5;
+        color: $info;
+        border-color: $info;
       }
       .action {
         color: #484848;
@@ -111,3 +105,12 @@
   }
 }
 /* Toast Restyle */
+
+@keyframes spin {
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}

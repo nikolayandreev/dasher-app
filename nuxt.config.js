@@ -36,6 +36,7 @@ export default {
    */
   css: [
     '~/assets/scss/general.scss',
+    '~/assets/fonts/RemixIcon/remixicon.css',
   ],
   /*
    ** Plugins to load before mounting the App
@@ -134,7 +135,7 @@ export default {
     ]
   },
   styleResources: {
-    sass: ['~/assets/scss/variables.scss'],
+    scss: ['~/assets/scss/variables.scss'],
   },
   /*
    ** Build configuration

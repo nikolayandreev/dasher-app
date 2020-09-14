@@ -85,12 +85,6 @@ $loadingSize: 4px;
   }
   main {
     padding: 0.5em 0em 0.5em 0em;
-    .content {
-    }
-  }
-  footer {
-    .actions {
-    }
   }
   &.loading {
     background: #f0f0f0;
@@ -101,7 +95,7 @@ $loadingSize: 4px;
       left: 0;
       right: auto;
       height: $loadingSize;
-      background: #3699ff;
+      background: $primary;
       width: 30%;
       transition: all 0.2s;
       animation: loading 1.5s infinite cubic-bezier(0.65, 0.05, 0.36, 1);
