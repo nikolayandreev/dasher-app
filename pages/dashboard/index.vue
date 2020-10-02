@@ -2,10 +2,6 @@
   <section class="container">
     <div class="grid grid-cols-3 gap-8">
       <div class="col-span-1 px-4 pb-12 bg-gray-200">
-        <Logo
-          width="100%"
-          height="250"
-        />
         <h3 class="mb-4 text-xl">My Blog</h3>
         <ul>
           <li>

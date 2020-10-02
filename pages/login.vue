@@ -34,12 +34,6 @@ export default {
     }
   },
   methods: {
-    showSuccess() {
-      this.$toast.success('Добре дошли отново!', {
-        duration: 3000,
-        icon: { name: 'ri-checkbox-circle-fill' },
-      })
-    },
     onSubmit() {
       this.$auth
         .loginWith('laravelSanctum', {
