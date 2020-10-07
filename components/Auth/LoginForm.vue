@@ -46,13 +46,8 @@ export default {
         })
         .catch((err) => {
           this.formPending = false
-          if (err.response === 422) {
-            this.errors = 'These credentials does not exist in our records!'
-          }
         })
     },
   },
 }
 </script>
-
-<style lang="scss" scoped></style>
