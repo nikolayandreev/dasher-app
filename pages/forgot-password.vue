@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <FormsWrapper setActive="signin" />
+    <FormsWrapper setActive="forgot-password" />
   </div>
 </template>
 

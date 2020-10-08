@@ -92,8 +92,8 @@ export default {
         provider: 'laravel/sanctum',
         url: process.env.API_BASE_URL,
         endpoints: {
-          login: { url: '/login' },
-          logout: { url: '/logout', method: 'DELETE' },
+          login: { url: '/api/login' },
+          logout: { url: '/api/logout', method: 'DELETE' },
           user: false,
         },
       },

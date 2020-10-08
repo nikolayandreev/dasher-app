@@ -1,32 +1,17 @@
-<template>
+<template functional>
   <div class="container">
-    <nav class="mb-4">
-      <ul class="flex flex-row flex-wrap">
-        <li
-          class="mr-4"
-          @click="activeForm = 'signin'"
-        >Вход
-        </li>
-        <li @click="activeForm = 'signup'">Регистрация</li>
-      </ul>
-    </nav>
-    <DynamicForm :form="activeForm" />
+    <FormsWrapper setActive="signup" />
   </div>
 </template>
 
 <script>
-import DynamicForm from '~/components/Auth/DynamicForm'
+import FormsWrapper from '~/components/Auth/FormsWrapper'
 
 export default {
   auth: 'guest',
-  layout: 'default',
+  layout: 'auth',
   components: {
-    DynamicForm,
-  },
-  data() {
-    return {
-      activeForm: 'signin',
-    }
+    FormsWrapper,
   },
 }
 </script>
