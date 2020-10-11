@@ -9,17 +9,17 @@
     </div>
     <div
       class="w-full mt-4 form-group"
-      v-if="!mailSent"
+      v-if="!passwordChanged"
     >
       <label
-        for="forgotPasswordEmail"
+        for="resetPasswordNew"
         class="block"
-      >Email адрес</label>
+      >Нова парола</label>
       <input
-        id="forgotPasswordEmail"
-        type="email"
-        placeholder="Твоят Email адрес"
-        v-model="forgotPasswordForm.email"
+        id="resetPasswordNew"
+        type="password"
+        placeholder="Избери нова парола"
+        v-model="resetPasswordForm.new_password"
       />
       <span
         class="block text-sm text-red-500 error"
@@ -27,7 +27,7 @@
       >{{ errors.email[0] }}</span>
     </div>
     <div
-      v-if="mailSent"
+      v-if="passwordChanged"
       class="flex flex-row flex-wrap flex-auto px-4 py-5 mt-4 bg-green-200 border-2 border-green-300 rounded-md sm:flex-no-wrap"
     >
       <svg
@@ -48,7 +48,7 @@
     </div>
     <div
       class="flex flex-row flex-no-wrap items-center justify-between mt-4"
-      v-if="!mailSent"
+      v-if="!passwordChanged"
     >
       <button type="submit">Send</button>
       <a
@@ -72,9 +72,10 @@ export default {
   data() {
     return {
       formPending: false,
-      mailSent: false,
-      forgotPasswordForm: {
-        email: null,
+      passwordChanged: false,
+      resetPasswordForm: {
+        new_password: null,
+        new_password_confirmed: null,
       },
       errors: null,
     }
@@ -88,11 +89,13 @@ export default {
 
       return this.$axios.$get('/sanctum/csrf-cookie').then(() => {
         return this.$axios
-          .post('/api/password/forgot-password', {
-            email: this.forgotPasswordForm.email,
+          .post('/api/password/reset-password', {
+            hash: this.$route.params.hash,
+            new_password: resetPasswordForm.new_password,
+            new_password_confirmation: resetPasswordForm.new_password_confirmed,
           })
           .then((res) => {
-            this.mailSent = true
+            this.passwordChanged = true
           })
           .catch((err) => {
             if (err.response.status === 422) {

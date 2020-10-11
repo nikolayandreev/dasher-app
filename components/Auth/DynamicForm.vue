@@ -13,6 +13,7 @@
 import LoginForm from '~/components/Auth/LoginForm'
 import RegisterForm from '~/components/Auth/RegisterForm'
 import ForgotPasswordForm from '~/components/Auth/ForgotPasswordForm'
+import ResetPasswordForm from '~/components/Auth/ResetPasswordForm'
 
 export default {
   props: {
@@ -20,7 +21,7 @@ export default {
       required: true,
       default: 'signin',
       validator: (prop) =>
-        ['signin', 'signup', 'forgot-password'].includes(prop),
+        ['signin', 'signup', 'forgot-password', 'reset-password'].includes(prop),
     },
   },
   auth: 'guest',
@@ -29,6 +30,7 @@ export default {
     signin: LoginForm,
     signup: RegisterForm,
     'forgot-password': ForgotPasswordForm,
+    'reset-password': ResetPasswordForm
   },
 }
 </script>

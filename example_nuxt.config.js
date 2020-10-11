@@ -34,10 +34,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    '~/assets/scss/general.scss',
-    '~/assets/fonts/RemixIcon/remixicon.css',
-  ],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -69,9 +66,6 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/toast',
-    '@nuxtjs/style-resources',
-    'nuxt-purgecss',
   ],
   /*
    ** Axios module configuration
@@ -108,34 +102,6 @@ export default {
       callback: '/signin',
       home: '/dashboard',
     },
-  },
-  toast: {
-    position: 'bottom-right',
-    keepOnHover: true,
-    iconPack: 'custom-class',
-    containerClass: 'bk-toast',
-    register: [
-      {
-        name: 'loading',
-        message: 'Зареждане...',
-        options: {
-          className: 'loading',
-          icon: 'ri-refresh-line',
-        }
-      },
-      {
-        name: 'serverError',
-        message: 'Няма връзка със сървъра, моля опитайте по-късно!',
-        options: {
-          duration: 10000,
-          type: 'error',
-          icon: 'ri-close-circle-fill'
-        }
-      }
-    ]
-  },
-  styleResources: {
-    scss: ['~/assets/scss/variables.scss'],
   },
   /*
    ** Build configuration
