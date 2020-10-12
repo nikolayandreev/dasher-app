@@ -209,9 +209,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.subscription-button {
-  @apply flex flex-col flex-wrap;
-}
-</style>
