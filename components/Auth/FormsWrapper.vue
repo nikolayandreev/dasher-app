@@ -1,5 +1,5 @@
 <template>
-  <div class="block mx-auto sm:w-full md:w-5/6 lg:w-4/6 xl:w-3/6">
+  <div class="block mx-auto sm:w-full md:w-5/6 lg:w-4/6 xl:w-full">
     <DynamicForm :form="activeForm" />
   </div>
 </template>
@@ -24,9 +24,9 @@ export default {
     DynamicForm,
   },
   mounted() {
-    window.addEventListener('popstate', function(event) {
-      window.location.reload();
-    });
+    window.addEventListener('popstate', function (event) {
+      window.location.reload()
+    })
 
     this.$nuxt.$on('go-to-register', () => {
       this.activeForm = 'signup'

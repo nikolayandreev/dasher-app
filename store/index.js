@@ -1,15 +1,21 @@
 export const state = () => ({
-
+  vendor_id: null,
 });
 
 export const mutations = {
-
+  setVendorId(state, payload) {
+    state.vendor_id = payload;
+  }
 };
 
 export const actions = {
   async nuxtServerInit({ dispatch }) {
     // await dispatch('setUser');
   },
+
+  commitVendorId({ commit }, payload) {
+    commit('setVendorId', payload);
+  }
   // setUser({ state, commit }) {
   //     if (state.auth.loggedIn) {
   //         this.$axios.$get('/api/user').then(res => {
@@ -23,5 +29,7 @@ export const actions = {
 };
 
 export const getters = {
-
+  getVendorId(state) {
+    return state.vendor_id;
+  }
 };

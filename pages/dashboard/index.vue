@@ -2,7 +2,7 @@
   <section class="container">
     <div class="grid grid-cols-3 gap-8">
       <div class="col-span-1 px-4 pb-12 bg-gray-200">
-        <h3 class="mb-4 text-xl">My Blog</h3>
+        <h3 class="mb-4 text-xl">My Blog for vendor: {{ vendorId }}</h3>
         <ul>
           <li>
             <nuxt-link to="/">Home</nuxt-link>
@@ -28,6 +28,9 @@ export default {
   computed: {
     user() {
       return this.$auth.user
+    },
+    vendorId() {
+      return this.$store.getters['getVendorId']
     },
   },
 }

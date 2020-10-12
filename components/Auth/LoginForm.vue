@@ -1,15 +1,10 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form
+    @submit.prevent="onSubmit"
+    class="max-w-sm mx-auto"
+  >
     <div>
-      <h3 class="text-xl font-semibold text-gray-900 sm:text-2xl">Добре дошъл, отново!</h3>
-      <div>
-        <span class="text-sm text-gray-600">Нямаш акаунт?</span>
-        <a
-          class="pb-px text-sm font-bold text-blue-600 border-b border-transparent hover:border-blue-600"
-          href="/signup"
-          @click.prevent="switchForm"
-        >Създай нов</a>
-      </div>
+      <h3 class="text-xl font-semibold text-center text-gray-900 sm:text-2xl">Добре дошъл, отново!</h3>
     </div>
     <div class="w-full mt-4 form-group">
       <div>
@@ -23,6 +18,7 @@
         class="block"
       >Email адрес</label>
       <input
+        class="w-full"
         id="loginEmail"
         type="email"
         placeholder="Твоят Email адрес"
@@ -39,6 +35,7 @@
         class="block"
       >Парола</label>
       <input
+        class="w-full"
         id="loginPassword"
         type="password"
         placeholder="Въведи паролата си"
@@ -50,23 +47,35 @@
       >{{ errors.password[0] }}</span>
     </div>
 
-    <div class="w-full mt-4 form-group">
-      <input
-        type="checkbox"
-        id="loginRememberMe"
-        v-model="loginForm.remember"
-      />
-      <label for="loginRememberMe">Запомни ме
-      </label>
-    </div>
-    <div class="flex flex-row flex-no-wrap items-center justify-between mt-4">
-      <button type="submit">Sign in</button>
+    <div class="flex flex-row flex-no-wrap items-center justify-between w-full mt-4 form-group">
+      <div>
+        <input
+          type="checkbox"
+          id="loginRememberMe"
+          v-model="loginForm.remember"
+        />
+        <label for="loginRememberMe">Запомни ме
+        </label>
+      </div>
       <a
         class="pb-px text-sm font-bold text-blue-600 border-b border-transparent hover:border-blue-600"
         @click.prevent="forgotPassword"
         href="/forgot-password"
         title="Възстанови паролата си"
       >Забравена парола?</a>
+    </div>
+    <div class="mt-4 text-center">
+      <button
+        type="submit"
+        class="w-full py-3 text-white bg-pink-600 rounded-sm"
+      >Влез в акаунта си</button>
+      <span class="block mt-4 text-sm text-gray-600">Нямаш акаунт?
+        <a
+          class="pb-px text-sm font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
+          href="/signup"
+          @click.prevent="switchForm"
+        >Създай нов</a>
+      </span>
     </div>
   </form>
 </template>
@@ -104,12 +113,21 @@ export default {
         })
         .then((res) => {
           this.$auth.setUser(res.data.data)
-          this.showSuccess()
+
+          if (!localStorage.getItem('dasher_vendor_id')) {
+            this.$store.dispatch('commitVendorId', res.data.data.vendors[0].id)
+          } else {
+            this.$store.dispatch(
+              'commitVendorId',
+              localStorage.getItem('dasher_vendor_id')
+            )
+          }
+
           return this.$router.push('/dashboard')
         })
         .catch((err) => {
           this.formPending = false
-          if (err.response.status === 422) {
+          if (err.response && err.response.status === 422) {
             if (!err.response.data.errors) {
               this.errors = err.response.data
             } else {

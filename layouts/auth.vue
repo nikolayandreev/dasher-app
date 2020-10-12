@@ -1,17 +1,14 @@
 <template>
-  <div class="flex flex-row flex-wrap items-start h-screen pt-12 bg-gray-100 sm:items-center sm:pt-0">
-    <div class="order-1 hidden w-1/4 h-screen px-2 py-6 bg-purple-800 xl:flex xl:flex-row xl:flex-wrap">
-      <nav class="self-end">
-        <ul class="flex flex-row flex-wrap">
-          <li>Общи условия</li>
-          <li>Условия за ползване</li>
-          <li>Лични данни</li>
-          <li>Помощ</li>
-        </ul>
-      </nav>
-    </div>
-    <div class="order-2 w-full xl:w-3/4">
+  <div class="flex flex-row flex-wrap items-start h-screen pt-12 bg-white sm:items-center sm:pt-0">
+    <div class="order-1 w-full xl:w-3/6">
       <Nuxt />
+    </div>
+    <div class="order-2 hidden w-0 h-screen xl:w-3/6 lg:flex lg:flex-row lg:flex-wrap">
+      <img
+        src="/images/png/auth-bg.jpg"
+        alt="Dasher.bg - Вход, Регистрация, Забравена парола"
+        class="object-cover object-left-top"
+      />
     </div>
   </div>
 </template>

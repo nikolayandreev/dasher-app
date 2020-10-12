@@ -13,5 +13,12 @@ export default {
   components: {
     FormsWrapper,
   },
+  validate({ params }) {
+    if (!params || !params.hash) {
+      return false
+    }
+
+    return true
+  },
 }
 </script>

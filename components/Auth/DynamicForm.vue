@@ -1,5 +1,10 @@
 <template>
   <div class="block px-4 py-6 overflow-hidden sm:px-8">
+    <img
+      class="h-8 mx-auto mb-4"
+      src="/images/dasher-logo.svg"
+      alt="Dasher - Твоята система за управление"
+    />
     <transition
       :name="`slide-${form === 'signin' ? 'left' : 'right'}`"
       mode="out-in"
@@ -21,7 +26,9 @@ export default {
       required: true,
       default: 'signin',
       validator: (prop) =>
-        ['signin', 'signup', 'forgot-password', 'reset-password'].includes(prop),
+        ['signin', 'signup', 'forgot-password', 'reset-password'].includes(
+          prop
+        ),
     },
   },
   auth: 'guest',
@@ -30,7 +37,7 @@ export default {
     signin: LoginForm,
     signup: RegisterForm,
     'forgot-password': ForgotPasswordForm,
-    'reset-password': ResetPasswordForm
+    'reset-password': ResetPasswordForm,
   },
 }
 </script>
