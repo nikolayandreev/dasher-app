@@ -1,5 +1,5 @@
 <template>
-  <div>Service > Index</div>
+  <div>Employees > Holidays</div>
 </template>
 
 <script>

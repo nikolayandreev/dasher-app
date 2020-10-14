@@ -1,22 +1,17 @@
 <template>
-  <form
-    @submit.prevent="onSubmit"
-    class="max-w-sm mx-auto"
-  >
+  <form @submit.prevent="onSubmit" class="max-w-sm mx-auto">
     <div>
-      <h3 class="text-xl font-semibold text-center text-gray-900 sm:text-2xl">Добре дошъл, отново!</h3>
+      <h3 class="text-xl font-semibold text-center text-gray-900 sm:text-2xl">
+        Добре дошъл, отново!
+      </h3>
     </div>
     <div class="w-full mt-4 form-group">
       <div>
-        <span
-          class="block mb-1 text-sm text-red-500 error"
-          v-if="mainError"
-        >{{ mainError.credentials[0] }}</span>
+        <span class="block mb-1 text-sm text-red-500 error" v-if="mainError">{{
+          mainError.credentials[0]
+        }}</span>
       </div>
-      <label
-        for="loginEmail"
-        class="block"
-      >Email адрес</label>
+      <label for="loginEmail" class="block">Email адрес</label>
       <input
         class="w-full"
         id="loginEmail"
@@ -27,13 +22,11 @@
       <span
         class="block text-sm text-red-500 error"
         v-if="errors && errors.email"
-      >{{ errors.email[0] }}</span>
+        >{{ errors.email[0] }}</span
+      >
     </div>
     <div class="w-full form-group">
-      <label
-        for="loginPassword"
-        class="block"
-      >Парола</label>
+      <label for="loginPassword" class="block">Парола</label>
       <input
         class="w-full"
         id="loginPassword"
@@ -44,37 +37,44 @@
       <span
         class="block text-sm text-red-500 error"
         v-if="errors && errors.password"
-      >{{ errors.password[0] }}</span>
+        >{{ errors.password[0] }}</span
+      >
     </div>
 
-    <div class="flex flex-row flex-no-wrap items-center justify-between w-full mt-4 form-group">
+    <div
+      class="flex flex-row flex-no-wrap items-center justify-between w-full mt-4 form-group"
+    >
       <div>
         <input
           type="checkbox"
           id="loginRememberMe"
           v-model="loginForm.remember"
         />
-        <label for="loginRememberMe">Запомни ме
-        </label>
+        <label for="loginRememberMe">Запомни ме </label>
       </div>
       <a
         class="pb-px text-sm font-bold text-blue-600 border-b border-transparent hover:border-blue-600"
         @click.prevent="forgotPassword"
         href="/forgot-password"
         title="Възстанови паролата си"
-      >Забравена парола?</a>
+        >Забравена парола?</a
+      >
     </div>
     <div class="mt-4 text-center">
       <button
         type="submit"
         class="w-full py-3 text-white bg-pink-600 rounded-sm"
-      >Влез в акаунта си</button>
-      <span class="block mt-4 text-sm text-gray-600">Нямаш акаунт?
+      >
+        Влез в акаунта си
+      </button>
+      <span class="block mt-4 text-sm text-gray-600"
+        >Нямаш акаунт?
         <a
           class="pb-px text-sm font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
           href="/signup"
           @click.prevent="switchForm"
-        >Създай нов</a>
+          >Създай нов</a
+        >
       </span>
     </div>
   </form>
@@ -123,7 +123,7 @@ export default {
             )
           }
 
-          return this.$router.push('/dashboard')
+          return this.$router.push('/reservations')
         })
         .catch((err) => {
           this.formPending = false

@@ -44,7 +44,6 @@ export default {
     '~/plugins/vuelidate.js',
     '~/plugins/v-lazy-image.js',
     { src: '~/plugins/perfect-scrollbar.js', mode: 'client' },
-    { src: '~/plugins/vue-inputmask.js', mode: 'client' },
   ],
   router: {
     middleware: ['auth'],
@@ -101,7 +100,7 @@ export default {
       login: '/signin',
       logout: '/',
       callback: '/signin',
-      home: '/dashboard',
+      home: '/reservations',
     },
   },
   /*

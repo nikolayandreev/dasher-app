@@ -1,5 +1,5 @@
 <template>
-  <div>Service > Index</div>
+  <div>Clients</div>
 </template>
 
 <script>

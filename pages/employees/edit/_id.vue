@@ -1,5 +1,5 @@
 <template>
-  <div>Service > Edit</div>
+  <div>Employees > Edit</div>
 </template>
 
 <script>
