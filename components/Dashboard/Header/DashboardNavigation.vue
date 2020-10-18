@@ -1,4 +1,4 @@
-<template>
+  <template>
   <ul>
     <li v-for="link in headerNav" :key="link.name">
       <button
@@ -12,7 +12,7 @@
           viewBox="0 0 24 24"
           class="w-6 h-6 text-gray-900 transition-all duration-300 fill-current"
           :class="{
-            'transition-all transform rotate-180': link.opened || link.active,
+            'transition-all transform rotate-180': shouldOpenSubMenu(link),
             'text-blue-600': link.active,
           }"
         >
@@ -32,7 +32,7 @@
       </nuxt-link>
       <transition name="slide" mode="out-in">
         <ul
-          v-if="link.children && (link.opened || link.active)"
+          v-if="link.children && shouldOpenSubMenu(link)"
           class="pl-6 bg-white sub-menu"
         >
           <li
@@ -165,6 +165,13 @@ export default {
     this.matchActive()
   },
   methods: {
+    shouldOpenSubMenu(link) {
+      if (link.active) {
+        return link.opened && link.active
+      }
+
+      return link.opened || link.active
+    },
     matchActive() {
       return this.headerNav.forEach((parent) => {
         let state = false

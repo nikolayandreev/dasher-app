@@ -66,6 +66,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    '@nuxtjs/svg-sprite',
   ],
   /*
    ** Axios module configuration

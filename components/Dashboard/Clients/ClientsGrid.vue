@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-4 overflow-hidden border border-gray-300 rounded-md shadow-xl">
+  <div>
     <div>
       Показване на
       <select v-model="perPage" @change="fetchClients()">
@@ -73,131 +73,80 @@
             :colspan="headers.length - filters.length"
           ></td>
         </tr>
-        <tr
-          class="border-b border-gray-300 hover:text-gray-900 hover:bg-gray-200"
+        <ClientsGridData
           v-for="client in clients"
           :key="client.id"
-        >
-          <td>
-            {{ client.id }}
-          </td>
-          <td>
-            {{ client.first_name }}
-          </td>
-          <td>
-            {{ client.last_name }}
-          </td>
-          <td>{{ client.phone }}</td>
-          <td>{{ client.sex }}</td>
-          <td>{{ client.created_at ? client.created_at : 'N/A' }}</td>
-          <td>{{ client.updated_at ? client.updated_at : 'N/A' }}</td>
-        </tr>
+          :client="client"
+        />
       </tbody>
     </table>
-    <ul v-if="pagination">
-      <li v-for="(page, index) in pagination.totalPages" :key="index">
-        <button @click="fetchClients(page)">
-          {{ page }}
-        </button>
-      </li>
-    </ul>
+    <div
+      class="flex flex-row flex-no-wrap items-center justify-between px-4 py-4"
+      v-if="pagination"
+    >
+      <div>
+        Показване на {{ pagination.count }} от {{ pagination.total }} резултата
+      </div>
+      <ul class="flex flex-row flex-no-wrap items-center">
+        <li v-if="pagination.links && pagination.links.previous">
+          <button @click="fetchClients(pagination.currentPage - 1)">
+            <svg-icon
+              name="chevron-left"
+              class="inline-block w-6 h-6"
+            ></svg-icon>
+          </button>
+        </li>
+        <li
+          v-for="(page, index) in pagination.totalPages"
+          :key="index"
+          class="mx-2 text-lg"
+        >
+          <button
+            @click="fetchClients(page)"
+            :class="{ 'font-semibold': pagination.currentPage === page }"
+          >
+            {{ page }}
+          </button>
+        </li>
+        <li v-if="pagination.links && pagination.links.next">
+          <button @click="fetchClients(pagination.currentPage + 1)">
+            <svg-icon
+              name="chevron-right"
+              class="inline-block w-6 h-6"
+            ></svg-icon>
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import ClientsGridData from '~/components/Dashboard/Clients/ClientsGridData'
+
 export default {
-  layout: 'dashboard',
+  components: {
+    ClientsGridData,
+  },
+  props: {
+    headers: {
+      required: true,
+      type: Array,
+    },
+    filters: {
+      required: false,
+      type: Array,
+    },
+  },
   data() {
     return {
+      pending: false,
+      clients: null,
       timer: null,
       page: 1,
       perPage: 15,
       pageOptions: [10, 15, 20, 25, 30, 50, 100],
-      clients: null,
       pagination: null,
-      headers: [
-        {
-          label: '#',
-          key: 'id',
-          class: 'w-32 text-center',
-          sort: 'desc',
-          sortable: true,
-        },
-        {
-          label: 'Име',
-          key: 'first_name',
-        },
-        {
-          label: 'Фамилия',
-          key: 'last_name',
-        },
-        {
-          label: 'Телефон',
-          key: 'phone',
-          sort: null,
-          sortable: true,
-        },
-        {
-          label: 'Пол',
-          key: 'sex',
-          sort: null,
-          sortable: true,
-        },
-        {
-          label: 'Създаден на',
-          key: 'created_at',
-          sort: null,
-          sortable: true,
-        },
-        {
-          label: 'Променен на',
-          key: 'updated_at',
-          sort: null,
-          sortable: true,
-        },
-      ],
-      filters: [
-        {
-          label: 'ID',
-          type: 'input',
-          key: 'id',
-          value: null,
-        },
-        {
-          label: 'Търси по име',
-          type: 'input',
-          key: 'first_name',
-          value: null,
-        },
-        {
-          label: 'Търси по Фамилия',
-          type: 'input',
-          key: 'last_name',
-          value: null,
-        },
-        {
-          label: 'Търси по телефон',
-          type: 'input',
-          key: 'phone',
-          value: null,
-        },
-        {
-          label: 'Търси по пол',
-          type: 'select',
-          key: 'sex',
-          value: '',
-          options: [
-            {
-              value: 1,
-              name: 'Мъж',
-            },
-            {
-              value: 2,
-              name: 'Жена',
-            },
-          ],
-        },
-      ],
     }
   },
   computed: {
@@ -209,13 +158,8 @@ export default {
     '$store.state.vendor_id': function () {
       this.fetchClients(this.pagination ? this.pagination.currentPage : 1)
     },
-    'pagination.currentPage': function (page) {
-      // this.fetchClients(page)
-      console.log(page)
-    },
   },
   created() {
-    //TODO INVEST TIME TO REFACTOR
     if (!this.clients && this.vendorId) {
       this.fetchClients()
     }
@@ -271,6 +215,7 @@ export default {
       return output
     },
     fetchClients(page = 1) {
+      this.pending = true
       return this.$axios
         .$get(
           `/api/clients/${this.vendorId}/grid?perPage=${this.perPage}
@@ -279,8 +224,10 @@ export default {
         .then((res) => {
           this.clients = res.data
           this.pagination = res.pagination
+          this.pending = false
         })
         .catch((err) => {
+          this.pending = false
           console.error(err)
         })
     },
@@ -297,17 +244,9 @@ table {
     }
   }
   tbody tr {
-    &:last-child {
-      @apply border-b-0;
-    }
     &.filters {
       td {
         @apply py-2 px-2 bg-gray-100 border-0;
-      }
-    }
-    &:not(.filters) {
-      td {
-        @apply px-3 py-3;
       }
     }
   }
