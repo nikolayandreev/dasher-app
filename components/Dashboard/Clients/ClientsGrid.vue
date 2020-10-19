@@ -1,13 +1,22 @@
 <template>
   <div>
-    <div>
-      Показване на
-      <select v-model="perPage" @change="fetchClients()">
-        <option v-for="option in pageOptions" :key="option" :value="option">
-          {{ option }}
-        </option>
-      </select>
-      записа
+    <div class="px-4 py-4">
+      <div>
+        Показване на
+        <select
+          v-model="perPage"
+          @change="fetchClients()"
+        >
+          <option
+            v-for="option in pageOptions"
+            :key="option"
+            :value="option"
+          >
+            {{ option }}
+          </option>
+        </select>
+        резултата
+      </div>
     </div>
     <table class="w-full text-gray-700 table-fixed">
       <thead>
@@ -31,19 +40,21 @@
                   :name="setIcon(header)"
                 />
               </div>
-              <span>{{ header.label }}</span>
+              <span class="w-full">{{ header.label }}</span>
             </div>
           </td>
         </tr>
       </thead>
       <tbody>
-        <tr class="filters" v-if="filters">
+        <tr
+          class="filters"
+          v-if="filters"
+        >
           <td
             v-for="filter in filters"
             :key="filter.key"
             :colspan="filter.colspan ? filter.colspan : 1"
           >
-            {{ filter.value }}
             <input
               v-if="filter.type === 'input'"
               type="text"
@@ -85,7 +96,7 @@
       v-if="pagination"
     >
       <div>
-        Показване на {{ pagination.count }} от {{ pagination.total }} резултата
+        {{ resultsCount }}
       </div>
       <ul class="flex flex-row flex-no-wrap items-center">
         <li v-if="pagination.links && pagination.links.previous">
@@ -147,11 +158,15 @@ export default {
       perPage: 15,
       pageOptions: [10, 15, 20, 25, 30, 50, 100],
       pagination: null,
+      results: null,
     }
   },
   computed: {
     vendorId() {
       return this.$store.getters['getVendorId']
+    },
+    resultsCount() {
+      return `Показване на резултати от ${this.results.from} до ${this.results.to} от общо ${this.pagination.total}`
     },
   },
   watch: {
@@ -224,6 +239,7 @@ export default {
         .then((res) => {
           this.clients = res.data
           this.pagination = res.pagination
+          this.results = res.results
           this.pending = false
         })
         .catch((err) => {

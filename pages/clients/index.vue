@@ -1,7 +1,10 @@
 <template>
-  <div class="pt-4 overflow-hidden border border-gray-300 rounded-md shadow-xl">
+  <div class="overflow-hidden border border-gray-300 rounded-md shadow-xl">
     <div>
-      <ClientsGrid :headers="headers" :filters="filters" />
+      <ClientsGrid
+        :headers="headers"
+        :filters="filters"
+      />
     </div>
   </div>
 </template>
@@ -20,7 +23,7 @@ export default {
         {
           label: '#',
           key: 'id',
-          class: 'w-32 text-center',
+          class: 'w-24 text-center',
           sort: 'desc',
           sortable: true,
         },
@@ -31,6 +34,10 @@ export default {
         {
           label: 'Фамилия',
           key: 'last_name',
+        },
+        {
+          label: 'Посещения',
+          key: 'total_visits',
         },
         {
           label: 'Телефон',
@@ -77,6 +84,10 @@ export default {
           value: null,
         },
         {
+          type: 'filler',
+          key: 'total_visits',
+        },
+        {
           label: 'Търси по телефон',
           type: 'input',
           key: 'phone',
@@ -97,6 +108,14 @@ export default {
               name: 'Жена',
             },
           ],
+        },
+        {
+          type: 'filler',
+          key: 'created_at',
+        },
+        {
+          type: 'filler',
+          key: 'updated_at',
         },
       ],
     }
