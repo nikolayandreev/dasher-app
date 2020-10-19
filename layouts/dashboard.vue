@@ -1,9 +1,10 @@
 <template>
-  <div class="box-border w-screen" style="height: 93vh">
+  <div
+    class="box-border w-screen"
+    style="height: 93vh"
+  >
     <DashboardNavbar />
-    <div
-      class="flex flex-row flex-no-wrap items-stretch w-full h-auto min-h-full"
-    >
+    <div class="flex flex-row flex-no-wrap items-stretch w-full h-auto min-h-full">
       <nav class="w-1/6 bg-white">
         <DashboardNavigation />
       </nav>
@@ -42,6 +43,7 @@ export default {
           }
         })
         .catch((err) => {
+          localStorage.removeItem('dasher_vendor_id')
           return this.$auth.logout()
         })
     }

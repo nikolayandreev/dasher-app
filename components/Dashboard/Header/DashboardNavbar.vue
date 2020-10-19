@@ -1,7 +1,5 @@
 <template>
-  <header
-    class="flex flex-row flex-no-wrap justify-between w-full px-5 py-3 bg-white"
-  >
+  <header class="flex flex-row flex-no-wrap justify-between w-full px-5 py-3 bg-white">
     <div class="logo">
       <img
         class="w-auto h-10"
@@ -9,7 +7,11 @@
         alt="Dasher - Твоята система за управление"
       />
     </div>
-    <select id="vendor" v-if="user.vendors" @change="changeVendor($event)">
+    <select
+      id="vendor"
+      v-if="user.vendors"
+      @change="changeVendor($event)"
+    >
       <option
         v-for="vendor in user.vendors"
         :key="vendor.id"
@@ -20,7 +22,10 @@
       </option>
     </select>
     <li>
-      <a href="#" @click.prevent="logout"> Sign out </a>
+      <a
+        href="#"
+        @click.prevent="logout"
+      > Sign out </a>
     </li>
   </header>
 </template>
@@ -38,6 +43,7 @@ export default {
       return this.$auth.user
     },
     async logout() {
+      localStorage.removeItem('dasher_vendor_id')
       await this.$auth.logout().then((res) => {
         this.$router.push('/')
       })
