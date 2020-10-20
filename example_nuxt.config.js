@@ -25,7 +25,7 @@ export default {
     link: [
       {
         rel: 'preconnect',
-        href: process.env.API_BASE_URL,
+        href: process.env.API_URL,
         crossorigin: 'use-credentials',
       },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -34,10 +34,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    '~/assets/scss/general.scss',
-    '~/assets/fonts/RemixIcon/remixicon.css',
-  ],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -69,16 +66,14 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/toast',
-    '@nuxtjs/style-resources',
-    'nuxt-purgecss',
+    '@nuxtjs/svg-sprite',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.API_URL,
     credentials: true,
   },
   auth: {
@@ -90,7 +85,7 @@ export default {
       },
       laravelSanctum: {
         provider: 'laravel/sanctum',
-        url: process.env.API_BASE_URL,
+        url: process.env.API_URL,
         endpoints: {
           login: { url: '/api/login' },
           logout: { url: '/api/logout', method: 'DELETE' },
@@ -106,36 +101,8 @@ export default {
       login: '/signin',
       logout: '/',
       callback: '/signin',
-      home: '/dashboard',
+      home: '/reservations',
     },
-  },
-  toast: {
-    position: 'bottom-right',
-    keepOnHover: true,
-    iconPack: 'custom-class',
-    containerClass: 'bk-toast',
-    register: [
-      {
-        name: 'loading',
-        message: 'Зареждане...',
-        options: {
-          className: 'loading',
-          icon: 'ri-refresh-line',
-        }
-      },
-      {
-        name: 'serverError',
-        message: 'Няма връзка със сървъра, моля опитайте по-късно!',
-        options: {
-          duration: 10000,
-          type: 'error',
-          icon: 'ri-close-circle-fill'
-        }
-      }
-    ]
-  },
-  styleResources: {
-    scss: ['~/assets/scss/variables.scss'],
   },
   /*
    ** Build configuration

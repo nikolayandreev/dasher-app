@@ -2,22 +2,18 @@
   <form @submit.prevent="onSubmit">
     <div>
       <h3 class="text-xl font-semibold text-gray-900 sm:text-2xl">Регистрирай се в Dasher!</h3>
-      <div class="mb-4">
-        <span class="text-sm text-gray-600">Вече имаш акаунт?</span>
-        <a
-          class="pb-px text-sm font-bold text-blue-600 border-b border-transparent hover:border-blue-600"
-          href="/signup"
-          @click.prevent="switchForm"
-        >Влез с него</a>
-      </div>
+      <p class="text-sm text-gray-500">
+        Твоите данни ще са в пълна безопастност с нас, ние не ги споделяме с трети лица и събираме само необходимото.
+      </p>
     </div>
-    <div class="flex flex-row flex-wrap">
+    <div class="flex flex-row flex-wrap mt-4">
       <div class="w-full form-group sm:w-2/4">
         <label
           for="registerFirstName"
           class="block"
         >Име</label>
         <input
+          class="w-full"
           type="registerFirstName"
           placeholder="Име"
           v-model="registerForm.firstName"
@@ -33,6 +29,7 @@
           class="block"
         >Фамилия</label>
         <input
+          class="w-full"
           id="registerLastName"
           type="text"
           placeholder="Фамилия"
@@ -49,6 +46,7 @@
           class="block"
         >Email адрес</label>
         <input
+          class="w-full"
           id="registerEmail"
           type="email"
           placeholder="Твоят Email адрес"
@@ -65,6 +63,7 @@
           class="block"
         >Парола</label>
         <input
+          class="w-full"
           id="registerPassword"
           type="password"
           placeholder="Избери парола"
@@ -81,6 +80,7 @@
           class="block"
         >Потвърди парола</label>
         <input
+          class="w-full"
           id="registerPasswordConfirmed"
           type="password"
           placeholder="Потвърди паролата си"
@@ -90,6 +90,25 @@
           class="block text-sm text-red-500 error"
           v-if="errors && errors.password"
         >{{ errors.password[0] }}</span>
+      </div>
+      <div class="w-full my-2 form-group">
+        <label for="subscription">Избери план</label>
+        <div class="flex flex-row flex-wrap overflow-hidden rounded-lg">
+          <RegisterSubscriptionButton
+            :selectedSubscription="selectedSubscription"
+            :subscription="plans.basic"
+            @click.prevent="registerForm.subscription = 'basic'"
+          />
+          <RegisterSubscriptionButton
+            :selectedSubscription="selectedSubscription"
+            :subscription="plans.pro"
+            @click.prevent="registerForm.subscription = 'pro'"
+          />
+          <span
+            class="block text-sm text-red-500 error"
+            v-if="errors && errors.subscription"
+          >{{ errors.subscription[0] }}</span>
+        </div>
       </div>
       <div class="w-full mt-2 form-group">
         <input
@@ -104,19 +123,46 @@
           >общите условия</nuxt-link>
         </label>
       </div>
-      <div class="block w-full mt-4">
-        <button type="submit">Sign up</button>
+      <div class="block w-full mt-4 text-center">
+        <button
+          type="submit"
+          class="inline-block px-40 py-3 text-white bg-pink-600 rounded-sm"
+        >Регистрирай се</button>
+        <span class="block mt-4 text-sm text-gray-600">Вече имаш акаунт?
+          <a
+            class="pb-px font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
+            href="/signup"
+            @click.prevent="switchForm"
+          >Влез с него</a>
+        </span>
       </div>
     </div>
   </form>
 </template>
 
 <script>
+import RegisterSubscriptionButton from '~/components/Auth/Register/SubscriptionButton'
+
 export default {
   auth: 'guest',
   layout: 'auth',
+  components: {
+    RegisterSubscriptionButton,
+  },
   data() {
     return {
+      plans: {
+        basic: {
+          name: 'Dasher Старт',
+          trial: true,
+          price: '40',
+        },
+        pro: {
+          name: 'Dasher Про',
+          trial: false,
+          price: '60',
+        },
+      },
       formPending: false,
       registerForm: {
         firstName: null,
@@ -124,10 +170,16 @@ export default {
         email: null,
         password: null,
         passwordConfirmed: null,
+        subscription: 'basic',
         terms: false,
       },
       errors: null,
     }
+  },
+  computed: {
+    selectedSubscription() {
+      return this.plans[this.registerForm.subscription]
+    },
   },
   methods: {
     switchForm() {
@@ -142,10 +194,13 @@ export default {
             first_name: this.registerForm.firstName,
             last_name: this.registerForm.lastName,
             email: this.registerForm.email,
+            subscription: this.registerForm.subscription,
             password: this.registerForm.password,
             password_confirmation: this.registerForm.passwordConfirmed,
           })
-          .then((res) => {})
+          .then((res) => {
+            window.location.href = res.data.data.redirect
+          })
           .catch((err) => {
             if (err.response.status === 422) {
               this.errors = err.response.data

@@ -26,7 +26,9 @@ module.exports = {
       }
     },
   },
-  variants: {},
+  variants: {
+    textColor: ['responsive', 'hover', 'focus', 'group-focus', 'group-hover'],
+  },
   plugins: [
     require('postcss-import'),
     require('tailwindcss'),

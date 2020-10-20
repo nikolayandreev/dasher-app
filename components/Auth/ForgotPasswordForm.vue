@@ -1,11 +1,11 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form
+    @submit.prevent="onSubmit"
+    class="max-w-sm mx-auto"
+  >
     <div>
-      <h3 class="text-xl font-semibold text-gray-900 sm:text-2xl">Възстанови паролата си</h3>
+      <h3 class="text-xl font-semibold text-gray-900 sm:text-2xl">Забравена парола</h3>
       <p class="text-sm text-gray-500">Ще ти изпратим Email с интрускции как да възстановиш паролата си.</p>
-      <div>
-
-      </div>
     </div>
     <div
       class="w-full mt-4 form-group"
@@ -46,13 +46,13 @@
         Ако намерим този email адрес в нашата система ще изпратим на него инструкции за възстановяване на паролата.
       </p>
     </div>
-    <div
-      class="flex flex-row flex-no-wrap items-center justify-between mt-4"
-      v-if="!mailSent"
-    >
-      <button type="submit">Send</button>
+    <div class="block mt-4 text-center">
+      <button
+        type="submit"
+        class="w-full py-3 text-white bg-pink-600 rounded-sm"
+      >Възстанови парола</button>
       <a
-        class="pb-px text-sm font-bold text-blue-600 border-b border-transparent hover:border-blue-600"
+        class="inline-block pb-px mt-4 text-sm font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
         href="/signup"
         @click.prevent="switchForm"
       >Обратно към Вход</a>
@@ -88,7 +88,7 @@ export default {
 
       return this.$axios.$get('/sanctum/csrf-cookie').then(() => {
         return this.$axios
-          .post('/api/forgot-password', {
+          .post('/api/password/forgot-password', {
             email: this.forgotPasswordForm.email,
           })
           .then((res) => {
