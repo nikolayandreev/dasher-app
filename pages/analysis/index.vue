@@ -5,5 +5,10 @@
 <script>
 export default {
   layout: 'dashboard',
+  middleware(context) {
+    if (!context.$permission('analysis.view')) {
+      context.redirect('/missing-access')
+    }
+  },
 }
 </script>

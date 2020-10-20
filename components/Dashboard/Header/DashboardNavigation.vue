@@ -1,56 +1,64 @@
   <template>
   <ul>
-    <li v-for="link in headerNav" :key="link.name">
-      <button
-        v-if="!link.url"
-        @click.prevent="setOpened(link.name)"
-        class="flex flex-row flex-no-wrap items-center justify-between w-full px-5 py-4 font-medium text-left text-gray-900 transition-all duration-200 bg-white border-r-4 border-transparent outline-none hover:bg-gray-300 focus:outline-none"
-        :class="{ opened: link.opened, hasActive: link.active }"
+    <template v-for="link in headerNav">
+      <li
+        v-if="$auth.user.permissions && $auth.user.permissions.includes(link.authorize)"
+        :key="link.name"
       >
-        <span>{{ link.name }}</span>
-        <svg
-          viewBox="0 0 24 24"
-          class="w-6 h-6 text-gray-900 transition-all duration-300 fill-current"
-          :class="{
+        <button
+          v-if="!link.url"
+          @click.prevent="setOpened(link.name)"
+          class="flex flex-row flex-no-wrap items-center justify-between w-full px-5 py-4 font-medium text-left text-gray-900 transition-all duration-200 bg-white border-r-4 border-transparent outline-none hover:bg-gray-300 focus:outline-none"
+          :class="{ opened: link.opened, hasActive: link.active }"
+        >
+          <span>{{ link.name }}</span>
+          <svg
+            viewBox="0 0 24 24"
+            class="w-6 h-6 text-gray-900 transition-all duration-300 fill-current"
+            :class="{
             'transition-all transform rotate-180': shouldOpenSubMenu(link),
             'text-blue-600': link.active,
           }"
-        >
-          <path
-            xmlns="http://www.w3.org/2000/svg"
-            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-          />
-        </svg>
-      </button>
-      <nuxt-link
-        v-else
-        :to="link.url"
-        :title="link.title"
-        class="inline-block w-full px-5 py-4 font-medium text-left text-gray-900 transition-all duration-200 bg-white border-r-4 border-transparent outline-none hover:bg-gray-300 focus:outline-none"
-      >
-        {{ link.name }}
-      </nuxt-link>
-      <transition name="slide" mode="out-in">
-        <ul
-          v-if="link.children && shouldOpenSubMenu(link)"
-          class="pl-6 bg-white sub-menu"
-        >
-          <li
-            v-for="child in link.children"
-            :key="child.url"
-            class="inline-block w-full px-4 py-3 text-gray-900 transition-all duration-200 hover:text-blue-600"
           >
-            <nuxt-link
-              :to="child.url"
-              :title="child.title"
-              class="block w-full"
+            <path
+              xmlns="http://www.w3.org/2000/svg"
+              d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+            />
+          </svg>
+        </button>
+        <nuxt-link
+          v-else
+          :to="link.url"
+          :title="link.title"
+          class="inline-block w-full px-5 py-4 font-medium text-left text-gray-900 transition-all duration-200 bg-white border-r-4 border-transparent outline-none hover:bg-gray-300 focus:outline-none"
+        >
+          {{ link.name }}
+        </nuxt-link>
+        <transition
+          name="slide"
+          mode="out-in"
+        >
+          <ul
+            v-if="link.children && shouldOpenSubMenu(link)"
+            class="pl-6 bg-white sub-menu"
+          >
+            <li
+              v-for="child in link.children"
+              :key="child.url"
+              class="inline-block w-full px-4 py-3 text-gray-900 transition-all duration-200 hover:text-blue-600"
             >
-              {{ `-  ${child.name}` }}
-            </nuxt-link>
-          </li>
-        </ul>
-      </transition>
-    </li>
+              <nuxt-link
+                :to="child.url"
+                :title="child.title"
+                class="block w-full"
+              >
+                {{ `-  ${child.name}` }}
+              </nuxt-link>
+            </li>
+          </ul>
+        </transition>
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -63,6 +71,7 @@ export default {
           url: '/reservations',
           title: 'Табло с резервации',
           name: 'Резервации',
+          authorize: 'reservations.view',
         },
         {
           url: null,
@@ -70,6 +79,7 @@ export default {
           name: 'Служители',
           active: false,
           opened: false,
+          authorize: 'employees.view',
           children: [
             {
               url: '/employees/create',
@@ -94,6 +104,7 @@ export default {
           name: 'Услуги',
           active: false,
           opened: false,
+          authorize: 'services.view',
           children: [
             {
               url: '/services/create',
@@ -118,6 +129,7 @@ export default {
           name: 'Клиенти',
           active: false,
           opened: false,
+          authorize: 'clients.view',
           children: [
             {
               url: '/clients/create',
@@ -140,11 +152,13 @@ export default {
           url: '/analysis',
           title: 'Анализи',
           name: 'Анализи',
+          authorize: 'analysis.view',
         },
         {
           url: '/payments',
           title: 'Плащания',
           name: 'Плащания',
+          authorize: 'billing.view',
         },
       ],
     }

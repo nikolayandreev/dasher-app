@@ -1,6 +1,6 @@
 <template>
   <header class="flex flex-row flex-no-wrap justify-between w-full px-5 py-3 bg-white">
-    <div class="logo">
+    <div class=" logo">
       <img
         class="w-auto h-10"
         src="/images/dasher-logo.svg"
@@ -24,7 +24,7 @@
     <li>
       <a
         href="#"
-        @click.prevent="logout"
+        @click.prevent="logout()"
       > Sign out </a>
     </li>
   </header>
@@ -42,14 +42,17 @@ export default {
     user() {
       return this.$auth.user
     },
-    async logout() {
-      localStorage.removeItem('dasher_vendor_id')
-      await this.$auth.logout().then((res) => {
-        this.$router.push('/')
-      })
-    },
   },
   methods: {
+    logout() {
+      localStorage.removeItem('dasher_vendor_id')
+
+      this.$auth.logout().then((res) => {
+        setTimeout(() => {
+          return this.$router.push('/')
+        }, 500)
+      })
+    },
     changeVendor(event) {
       this.$store.dispatch('commitVendorId', event.target.value)
       localStorage.setItem('dasher_vendor_id', event.target.value)

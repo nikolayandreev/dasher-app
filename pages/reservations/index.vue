@@ -2,6 +2,8 @@
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1 px-4 pb-12 bg-gray-200">
       <h3 class="mb-4 text-xl">My Blog for vendor: {{ vendorId }}</h3>
+      Has Permission to view billing: {{ $permission('billing.view') }}<br />
+      Has Permission to view clients: {{ $permission('clients.view') }}
       <ul>
         <li>
           <nuxt-link to="/">Home</nuxt-link>
@@ -29,6 +31,14 @@
 <script>
 export default {
   layout: 'dashboard',
+  middleware(context) {
+    if (
+      !context.$permission('reservations.view') &&
+      !context.$permission('reservations.view.own')
+    ) {
+      context.redirect('/missing-access')
+    }
+  },
   computed: {
     user() {
       return this.$auth.user

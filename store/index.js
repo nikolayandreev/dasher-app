@@ -13,8 +13,15 @@ export const mutations = {
 };
 
 export const actions = {
-  async nuxtServerInit({ dispatch }) {
-    // await dispatch('setUser');
+  async nuxtServerInit({ dispatch, commit }) {
+    await this.$axios.$get('/api/user')
+      .then(res => {
+        commit('auth/SET', { key: 'user', value: res.data });
+        commit('auth/SET', { key: 'loggedIn', value: true });
+      })
+      .catch(err => {
+        return '/signin';
+      })
   },
 
   commitVendorId({ commit }, payload) {
@@ -22,17 +29,7 @@ export const actions = {
   },
   commitActiveMenu({ commit }, payload) {
     commit('setActiveMenu', payload);
-  }
-  // setUser({ state, commit }) {
-  //     if (state.auth.loggedIn) {
-  //         this.$axios.$get('/api/user').then(res => {
-  //             this.$auth.setUser(res);
-  //         }).catch(err => {
-  //             console.error(err);
-  //             this.$auth.logout();
-  //         })
-  //     }
-  // }
+  },
 };
 
 export const getters = {

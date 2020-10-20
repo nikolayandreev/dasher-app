@@ -25,7 +25,7 @@ export default {
     link: [
       {
         rel: 'preconnect',
-        href: process.env.API_BASE_URL,
+        href: process.env.API_URL,
         crossorigin: 'use-credentials',
       },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -73,7 +73,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.API_URL,
     credentials: true,
   },
   auth: {
@@ -85,7 +85,7 @@ export default {
       },
       laravelSanctum: {
         provider: 'laravel/sanctum',
-        url: process.env.API_BASE_URL,
+        url: process.env.API_URL,
         endpoints: {
           login: { url: '/api/login' },
           logout: { url: '/api/logout', method: 'DELETE' },

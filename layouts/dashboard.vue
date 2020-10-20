@@ -27,26 +27,50 @@ export default {
     DashboardNavigation,
   },
   beforeCreate() {
-    if (process.client && !this.$auth.user.id) {
-      this.$axios
-        .$get('/api/user')
-        .then((res) => {
-          this.$auth.setUser(res.data)
-
+    if (process.client) {
+      if (this.$auth.loggedIn) {
+        if (this.$auth.user.vendors && this.$auth.user.vendors.length) {
+          let firstVendorId = this.$auth.user.vendors[0].id
           if (!localStorage.getItem('dasher_vendor_id')) {
-            this.$store.dispatch('commitVendorId', res.data.vendors[0].id)
+            this.$store.dispatch('commitVendorId', firstVendorId)
           } else {
             this.$store.dispatch(
               'commitVendorId',
               localStorage.getItem('dasher_vendor_id')
             )
           }
-        })
-        .catch((err) => {
-          localStorage.removeItem('dasher_vendor_id')
-          return this.$auth.logout()
-        })
+        }
+      } else {
+        this.$store.dispatch('commitVendorId', null)
+      }
     }
+    // if (!this.$auth.user.id) {
+    //   this.$axios
+    //     .$get('/api/user')
+    //     .then((res) => {
+    //       this.$store.commit('auth/SET', { key: 'user', value: res.data })
+    //       if (process.client) {
+    //         if (res.data.vendors && res.data.vendors.length) {
+    //           let firstVendorId = res.data.vendors[0].id
+    //           if (!localStorage.getItem('dasher_vendor_id')) {
+    //             this.$store.dispatch('commitVendorId', firstVendorId)
+    //           } else {
+    //             this.$store.dispatch(
+    //               'commitVendorId',
+    //               localStorage.getItem('dasher_vendor_id')
+    //             )
+    //           }
+    //         }
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       this.$store.dispatch('commitVendorId', null)
+    //       if (process.client) {
+    //         localStorage.removeItem('dasher_vendor_id')
+    //       }
+    //       return this.$auth.logout()
+    //     })
+    // }
   },
 }
 </script>

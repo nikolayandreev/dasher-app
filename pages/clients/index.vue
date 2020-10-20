@@ -17,6 +17,11 @@ export default {
   components: {
     ClientsGrid,
   },
+  middleware(context) {
+    if (!context.$permission('clients.view')) {
+      context.redirect('/missing-access')
+    }
+  },
   data() {
     return {
       headers: [
@@ -37,13 +42,14 @@ export default {
         },
         {
           label: 'Посещения',
-          key: 'total_visits',
+          key: 'reservations_count',
+          class: 'text-center',
+          sort: null,
+          sortable: true,
         },
         {
           label: 'Телефон',
           key: 'phone',
-          sort: null,
-          sortable: true,
         },
         {
           label: 'Пол',
@@ -62,6 +68,11 @@ export default {
           key: 'updated_at',
           sort: null,
           sortable: true,
+        },
+        {
+          label: 'Действия',
+          key: 'actions',
+          class: 'w-24 text-right',
         },
       ],
       filters: [
@@ -116,6 +127,10 @@ export default {
         {
           type: 'filler',
           key: 'updated_at',
+        },
+        {
+          type: 'filler',
+          key: 'actions',
         },
       ],
     }

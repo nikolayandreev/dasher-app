@@ -77,6 +77,11 @@
 <script>
 export default {
   layout: 'dashboard',
+  middleware(context) {
+    if (!context.$permission('services.create')) {
+      context.redirect('/missing-access')
+    }
+  },
   data() {
     return {
       formPending: false,

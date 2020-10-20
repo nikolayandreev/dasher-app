@@ -198,7 +198,9 @@ export default {
             password: this.registerForm.password,
             password_confirmation: this.registerForm.passwordConfirmed,
           })
-          .then((res) => {})
+          .then((res) => {
+            window.location.href = res.data.data.redirect
+          })
           .catch((err) => {
             if (err.response.status === 422) {
               this.errors = err.response.data

@@ -2,8 +2,15 @@
   <div class="pt-4 overflow-hidden border border-gray-300 rounded-md shadow-xl">
     <div>
       Показване на
-      <select v-model="perPage" @change="fetchClients()">
-        <option v-for="option in pageOptions" :key="option" :value="option">
+      <select
+        v-model="perPage"
+        @change="fetchClients()"
+      >
+        <option
+          v-for="option in pageOptions"
+          :key="option"
+          :value="option"
+        >
           {{ option }}
         </option>
       </select>
@@ -37,7 +44,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="filters" v-if="filters">
+        <tr
+          class="filters"
+          v-if="filters"
+        >
           <td
             v-for="filter in filters"
             :key="filter.key"
@@ -95,7 +105,10 @@
       </tbody>
     </table>
     <ul v-if="pagination">
-      <li v-for="(page, index) in pagination.totalPages" :key="index">
+      <li
+        v-for="(page, index) in pagination.totalPages"
+        :key="index"
+      >
         <button @click="fetchClients(page)">
           {{ page }}
         </button>
@@ -107,6 +120,11 @@
 <script>
 export default {
   layout: 'dashboard',
+  middleware(context) {
+    if (!context.$permission('employees.view')) {
+      context.redirect('/missing-access')
+    }
+  },
   data() {
     return {
       timer: null,

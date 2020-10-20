@@ -33,14 +33,14 @@
             @click="header.sortable ? changeSort(header) : false"
           >
             <div class="flex flex-row flex-no-wrap items-center">
-              <div v-if="header.sortable">
+              <span class="w-full">{{ header.label }}
                 <svg-icon
-                  class="w-4 h-4 mr-2 text-gray-600 fill-current"
+                  v-if="header.sortable"
+                  class="inline-block w-4 h-4 ml-2 text-gray-600 align-middle fill-current"
                   :class="{ 'text-gray-900': header.sort }"
                   :name="setIcon(header)"
                 />
-              </div>
-              <span class="w-full">{{ header.label }}</span>
+              </span>
             </div>
           </td>
         </tr>
@@ -88,47 +88,15 @@
           v-for="client in clients"
           :key="client.id"
           :client="client"
+          @reload="fetchClients(pagination.currentPage)"
         />
       </tbody>
     </table>
-    <div
-      class="flex flex-row flex-no-wrap items-center justify-between px-4 py-4"
-      v-if="pagination"
-    >
-      <div>
-        {{ resultsCount }}
-      </div>
-      <ul class="flex flex-row flex-no-wrap items-center">
-        <li v-if="pagination.links && pagination.links.previous">
-          <button @click="fetchClients(pagination.currentPage - 1)">
-            <svg-icon
-              name="chevron-left"
-              class="inline-block w-6 h-6"
-            ></svg-icon>
-          </button>
-        </li>
-        <li
-          v-for="(page, index) in pagination.totalPages"
-          :key="index"
-          class="mx-2 text-lg"
-        >
-          <button
-            @click="fetchClients(page)"
-            :class="{ 'font-semibold': pagination.currentPage === page }"
-          >
-            {{ page }}
-          </button>
-        </li>
-        <li v-if="pagination.links && pagination.links.next">
-          <button @click="fetchClients(pagination.currentPage + 1)">
-            <svg-icon
-              name="chevron-right"
-              class="inline-block w-6 h-6"
-            ></svg-icon>
-          </button>
-        </li>
-      </ul>
-    </div>
+    <DataTablePagination
+      :pagination="pagination"
+      :results="results"
+      @change-page="page = $event"
+    />
   </div>
 </template>
 
@@ -165,11 +133,11 @@ export default {
     vendorId() {
       return this.$store.getters['getVendorId']
     },
-    resultsCount() {
-      return `Показване на резултати от ${this.results.from} до ${this.results.to} от общо ${this.pagination.total}`
-    },
   },
   watch: {
+    page(newValue, oldValue) {
+      return this.fetchClients(newValue)
+    },
     '$store.state.vendor_id': function () {
       this.fetchClients(this.pagination ? this.pagination.currentPage : 1)
     },
