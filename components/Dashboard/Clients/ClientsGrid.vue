@@ -1,5 +1,20 @@
 <template>
-  <div>
+  <div class="relative">
+
+    <div
+      class="absolute z-30 flex flex-row flex-wrap items-center justify-center w-full h-full pending"
+      v-if="pending"
+    >
+      <div class="absolute inset-0 z-40 bg-gray-400 opacity-25"></div>
+      <div class="flex flex-row flex-no-wrap items-center justify-center px-20 py-4 bg-white border border-blue-100 shadow-lg animate-bounce">
+        <svg-icon
+          name="loading"
+          class="w-5 h-5 mr-2 text-blue-600 align-middle fill-current animate-spin"
+        />
+        <span class="font-medium text-md font-display">Зареждане...</span>
+      </div>
+    </div>
+
     <div class="px-4 py-4">
       <div>
         Показване на
@@ -8,43 +23,19 @@
           @change="fetchClients()"
         >
           <option
-            v-for="option in pageOptions"
-            :key="option"
+            v-for="(option, i) in pageOptions"
+            :key="i"
             :value="option"
-          >
-            {{ option }}
-          </option>
+          >{{ option }}</option>
         </select>
         резултата
       </div>
     </div>
-    <table class="w-full text-gray-700 table-fixed">
-      <thead>
-        <tr>
-          <td
-            v-for="header in headers"
-            :key="header.key"
-            :class="{
-              [header.class]: header.class,
-              'cursor-pointer': header.sortable,
-              'text-gray-900': header.sort,
-            }"
-            class="text-sm font-semibold text-gray-600"
-            @click="header.sortable ? changeSort(header) : false"
-          >
-            <div class="flex flex-row flex-no-wrap items-center">
-              <span class="w-full">{{ header.label }}
-                <svg-icon
-                  v-if="header.sortable"
-                  class="inline-block w-4 h-4 ml-2 text-gray-600 align-middle fill-current"
-                  :class="{ 'text-gray-900': header.sort }"
-                  :name="setIcon(header)"
-                />
-              </span>
-            </div>
-          </td>
-        </tr>
-      </thead>
+    <table class="w-full overflow-x-scroll text-gray-700 table-auto sm:table-fixed">
+      <DataTableHeaders
+        :headers="headers"
+        @reload="fetchClients()"
+      />
       <tbody>
         <tr
           class="filters"
@@ -62,22 +53,13 @@
               v-model="filter.value"
               @keyup="filterQuery()"
             />
-            <select
+            <DhSelect
+              id="clients[sex]"
               v-if="filter.type === 'select'"
+              :options="filter.options"
               v-model="filter.value"
-              @change="fetchClients()"
-            >
-              <option value="">
-                {{ filter.label }}
-              </option>
-              <option
-                v-for="option in filter.options"
-                :key="option.value"
-                :value="option.value"
-              >
-                {{ option.name }}
-              </option>
-            </select>
+              @input="fetchClients()"
+            />
           </td>
           <td
             v-if="headers.length - filters.length > 0"
@@ -102,10 +84,12 @@
 
 <script>
 import ClientsGridData from '~/components/Dashboard/Clients/ClientsGridData'
+import DhSelect from '~/components/ui/Select'
 
 export default {
   components: {
     ClientsGridData,
+    DhSelect,
   },
   props: {
     headers: {
@@ -155,28 +139,6 @@ export default {
         return this.fetchClients()
       }, 500)
     },
-    setIcon(header) {
-      if (!header.sort) {
-        return 'sort'
-      }
-
-      return header.sort === 'desc' ? 'sort-desc' : 'sort-asc'
-    },
-    changeSort(header) {
-      this.headers.forEach((elem) => {
-        if (elem.sortable && elem !== header) {
-          elem.sort = null
-        }
-      })
-
-      if (!header.sort) {
-        header.sort = 'desc'
-      }
-
-      header.sort = header.sort === 'desc' ? 'asc' : 'desc'
-      this.setIcon(header)
-      this.fetchClients()
-    },
     prepareFilters() {
       let output = ''
       this.filters.forEach((filter) => {
@@ -198,6 +160,7 @@ export default {
       return output
     },
     fetchClients(page = 1) {
+      this.page = page
       this.pending = true
       return this.$axios
         .$get(
@@ -221,12 +184,6 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  thead tr {
-    @apply border-b border-gray-300;
-    td {
-      @apply px-2 py-2;
-    }
-  }
   tbody tr {
     &.filters {
       td {

@@ -5,19 +5,35 @@
         v-if="$auth.user.permissions && $auth.user.permissions.includes(link.authorize)"
         :key="link.name"
       >
+        <nuxt-link
+          v-if="link.url"
+          :to="link.url"
+          :title="link.title"
+          class="flex flex-row flex-no-wrap items-center justify-start w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent border-r-4 border-transparent outline-none hover:bg-pink-100 hover:text-pink-600 focus:outline-none"
+        >
+          <svg-icon
+            :name="link.icon"
+            class="w-6 h-6 mr-4 text-pink-600 transition-all duration-300 fill-current"
+          />
+          {{ link.name }}
+        </nuxt-link>
         <button
-          v-if="!link.url"
+          v-else
           @click.prevent="setOpened(link.name)"
-          class="flex flex-row flex-no-wrap items-center justify-between w-full px-5 py-4 font-medium text-left text-gray-900 transition-all duration-200 bg-white border-r-4 border-transparent outline-none hover:bg-gray-300 focus:outline-none"
+          class="flex flex-row flex-no-wrap items-center justify-start w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent border-r-4 border-transparent outline-none hover:bg-pink-100 hover:text-pink-600 focus:outline-none"
           :class="{ opened: link.opened, hasActive: link.active }"
         >
+          <svg-icon
+            :name="link.icon"
+            class="w-6 h-6 mr-4 text-pink-600 transition-all duration-300 fill-current"
+          />
           <span>{{ link.name }}</span>
           <svg
             viewBox="0 0 24 24"
-            class="w-6 h-6 text-gray-900 transition-all duration-300 fill-current"
+            class="w-6 h-6 ml-auto text-gray-800 transition-all duration-300 fill-current"
             :class="{
             'transition-all transform rotate-180': shouldOpenSubMenu(link),
-            'text-blue-600': link.active,
+            'text-pink-600': link.active,
           }"
           >
             <path
@@ -26,26 +42,19 @@
             />
           </svg>
         </button>
-        <nuxt-link
-          v-else
-          :to="link.url"
-          :title="link.title"
-          class="inline-block w-full px-5 py-4 font-medium text-left text-gray-900 transition-all duration-200 bg-white border-r-4 border-transparent outline-none hover:bg-gray-300 focus:outline-none"
-        >
-          {{ link.name }}
-        </nuxt-link>
         <transition
-          name="slide"
+          name="
+            slide"
           mode="out-in"
         >
           <ul
             v-if="link.children && shouldOpenSubMenu(link)"
-            class="pl-6 bg-white sub-menu"
+            class="pl-6 bg-gray-100 sub-menu"
           >
             <li
               v-for="child in link.children"
               :key="child.url"
-              class="inline-block w-full px-4 py-3 text-gray-900 transition-all duration-200 hover:text-blue-600"
+              class="inline-block w-full px-4 py-3 text-gray-800 transition-all duration-200 hover:text-pink-600"
             >
               <nuxt-link
                 :to="child.url"
@@ -72,6 +81,7 @@ export default {
           title: 'Табло с резервации',
           name: 'Резервации',
           authorize: 'reservations.view',
+          icon: 'reservations',
         },
         {
           url: null,
@@ -80,6 +90,7 @@ export default {
           active: false,
           opened: false,
           authorize: 'employees.view',
+          icon: 'employees',
           children: [
             {
               url: '/employees/create',
@@ -105,6 +116,7 @@ export default {
           active: false,
           opened: false,
           authorize: 'services.view',
+          icon: 'services',
           children: [
             {
               url: '/services/create',
@@ -130,6 +142,7 @@ export default {
           active: false,
           opened: false,
           authorize: 'clients.view',
+          icon: 'clients',
           children: [
             {
               url: '/clients/create',
@@ -153,12 +166,14 @@ export default {
           title: 'Анализи',
           name: 'Анализи',
           authorize: 'analysis.view',
+          icon: 'analysis',
         },
         {
           url: '/payments',
           title: 'Плащания',
           name: 'Плащания',
           authorize: 'billing.view',
+          icon: 'payments',
         },
       ],
     }
@@ -166,6 +181,18 @@ export default {
   computed: {
     currentPath() {
       return this.$store.getters['getActiveMenu']
+    },
+    selectedVendorId() {
+      if (process.client && localStorage.getItem('dasher_vendor_id')) {
+        return parseInt(localStorage.getItem('dasher_vendor_id'))
+      }
+      return this.$store.getters['getVendorId']
+    },
+    user() {
+      return this.$auth.user
+    },
+    selectedVendor() {
+      return this.$store.getters['getSelectedVendor']
     },
   },
   watch: {
@@ -179,6 +206,10 @@ export default {
     this.matchActive()
   },
   methods: {
+    changeVendor(event) {
+      this.$store.dispatch('commitVendorId', event.target.value)
+      localStorage.setItem('dasher_vendor_id', event.target.value)
+    },
     shouldOpenSubMenu(link) {
       if (link.active) {
         return link.opened && link.active
@@ -227,16 +258,19 @@ export default {
 <style lang="scss" scoped>
 .opened,
 .hasActive {
-  @apply border-r-4 border-blue-400;
+  @apply border-r-4 border-pink-400;
 }
 .hasActive {
-  @apply text-blue-600 bg-blue-100 border-r-4 border-blue-600;
+  @apply text-pink-600 bg-pink-100 border-r-4 border-pink-600;
 }
 .nuxt-link-exact-active {
-  @apply text-blue-600  border-blue-700 border-r-4 bg-blue-100 transition-all;
+  @apply text-pink-600  border-pink-700 border-r-4 bg-pink-100 transition-all;
+  svg {
+    @apply text-pink-600;
+  }
 }
 .sub-menu .nuxt-link-exact-active {
-  @apply text-blue-600 bg-white border-r-0 font-medium;
+  @apply text-pink-600 bg-transparent border-r-0 font-medium;
 }
 .slide-enter-active {
   transition-duration: 0.3s;

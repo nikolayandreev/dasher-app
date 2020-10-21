@@ -111,12 +111,16 @@ export default {
           value: '',
           options: [
             {
+              value: null,
+              text: 'Избери пол',
+            },
+            {
               value: 1,
-              name: 'Мъж',
+              text: 'Мъж',
             },
             {
               value: 2,
-              name: 'Жена',
+              text: 'Жена',
             },
           ],
         },

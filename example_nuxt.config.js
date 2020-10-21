@@ -40,6 +40,7 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    '~/plugins/inject.js',
     '~/plugins/axios.js',
     '~/plugins/vuelidate.js',
     '~/plugins/v-lazy-image.js',

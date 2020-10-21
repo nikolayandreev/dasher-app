@@ -1,5 +1,6 @@
 export const state = () => ({
   vendor_id: null,
+  selectedVendor: null,
   activeMenu: null,
 });
 
@@ -9,6 +10,9 @@ export const mutations = {
   },
   setActiveMenu(state, payload) {
     state.activeMenu = payload;
+  },
+  setSelectedVendor(state, payload) {
+    state.selectedVendor = payload;
   }
 };
 
@@ -23,7 +27,9 @@ export const actions = {
         return '/signin';
       })
   },
-
+  commitVendor({ commit }, payload) {
+    commit('setSelectedVendor', payload);
+  },
   commitVendorId({ commit }, payload) {
     commit('setVendorId', payload);
   },
@@ -38,5 +44,8 @@ export const getters = {
   },
   getActiveMenu(state) {
     return state.activeMenu;
+  },
+  getSelectedVendor(state) {
+    return state.selectedVendor;
   }
 };

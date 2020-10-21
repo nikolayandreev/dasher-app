@@ -6,6 +6,7 @@
     <DashboardNavbar />
     <div class="flex flex-row flex-no-wrap items-stretch w-full h-auto min-h-full">
       <nav class="w-1/6 bg-white">
+        <DashboardNavigationVendor />
         <DashboardNavigation />
       </nav>
       <div class="flex flex-row flex-wrap w-5/6 bg-gray-400">
@@ -20,11 +21,31 @@
 <script>
 import DashboardNavbar from '~/components/Dashboard/Header/DashboardNavbar'
 import DashboardNavigation from '~/components/Dashboard/Header/DashboardNavigation'
+import DashboardNavigationVendor from '~/components/Dashboard/Header/DashboardNavigationVendor'
 
 export default {
   components: {
     DashboardNavbar,
+    DashboardNavigationVendor,
     DashboardNavigation,
+  },
+  watch: {
+    '$store.state.vendor_id': function () {
+      this.setSelectedVendor()
+    },
+  },
+  methods: {
+    setSelectedVendor() {
+      this.$store.dispatch(
+        'commitVendor',
+        this.$auth.user.vendors.find(
+          (elem) => elem.id === parseInt(this.$store.state.vendor_id)
+        )
+      )
+    },
+  },
+  created() {
+    this.setSelectedVendor()
   },
   beforeCreate() {
     if (process.client) {
@@ -36,7 +57,7 @@ export default {
           } else {
             this.$store.dispatch(
               'commitVendorId',
-              localStorage.getItem('dasher_vendor_id')
+              parseInt(localStorage.getItem('dasher_vendor_id'))
             )
           }
         }
@@ -44,33 +65,6 @@ export default {
         this.$store.dispatch('commitVendorId', null)
       }
     }
-    // if (!this.$auth.user.id) {
-    //   this.$axios
-    //     .$get('/api/user')
-    //     .then((res) => {
-    //       this.$store.commit('auth/SET', { key: 'user', value: res.data })
-    //       if (process.client) {
-    //         if (res.data.vendors && res.data.vendors.length) {
-    //           let firstVendorId = res.data.vendors[0].id
-    //           if (!localStorage.getItem('dasher_vendor_id')) {
-    //             this.$store.dispatch('commitVendorId', firstVendorId)
-    //           } else {
-    //             this.$store.dispatch(
-    //               'commitVendorId',
-    //               localStorage.getItem('dasher_vendor_id')
-    //             )
-    //           }
-    //         }
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       this.$store.dispatch('commitVendorId', null)
-    //       if (process.client) {
-    //         localStorage.removeItem('dasher_vendor_id')
-    //       }
-    //       return this.$auth.logout()
-    //     })
-    // }
   },
 }
 </script>

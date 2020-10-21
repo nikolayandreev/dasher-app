@@ -83,6 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 tr td {
-  @apply px-2 py-3;
+  @apply px-2 py-2;
 }
 </style>

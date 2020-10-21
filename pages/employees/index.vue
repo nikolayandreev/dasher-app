@@ -1,119 +1,107 @@
 <template>
-  <div class="pt-4 overflow-hidden border border-gray-300 rounded-md shadow-xl">
-    <div>
-      Показване на
-      <select
-        v-model="perPage"
-        @change="fetchClients()"
+  <div>
+    <div class="space-y-1">
+      <label
+        id="listbox-label"
+        class="block text-sm font-medium leading-5 text-gray-700"
       >
-        <option
-          v-for="option in pageOptions"
-          :key="option"
-          :value="option"
-        >
-          {{ option }}
-        </option>
-      </select>
-      записа
-    </div>
-    <table class="w-full text-gray-700 table-fixed">
-      <thead>
-        <tr>
-          <td
-            v-for="header in headers"
-            :key="header.key"
-            :class="{
-              [header.class]: header.class,
-              'cursor-pointer': header.sortable,
-              'text-gray-900': header.sort,
-            }"
-            class="text-sm font-semibold text-gray-600"
-            @click="header.sortable ? changeSort(header) : false"
+        Assigned to
+      </label>
+      <div class="relative">
+        <span class="inline-block w-full rounded-md shadow-sm">
+          <button
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="true"
+            aria-labelledby="listbox-label"
+            class="relative w-full py-2 pl-3 pr-10 text-left transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md cursor-default focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
           >
-            <div class="flex flex-row flex-no-wrap items-center">
-              <div v-if="header.sortable">
-                <svg-icon
-                  class="w-4 h-4 mr-2 text-gray-600 fill-current"
-                  :class="{ 'text-gray-900': header.sort }"
-                  :name="setIcon(header)"
-                />
-              </div>
-              <span>{{ header.label }}</span>
-            </div>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="filters"
-          v-if="filters"
-        >
-          <td
-            v-for="filter in filters"
-            :key="filter.key"
-            :colspan="filter.colspan ? filter.colspan : 1"
-          >
-            {{ filter.value }}
-            <input
-              v-if="filter.type === 'input'"
-              type="text"
-              :placeholder="filter.label"
-              v-model="filter.value"
-              @keyup="filterQuery()"
-            />
-            <select
-              v-if="filter.type === 'select'"
-              v-model="filter.value"
-              @change="fetchClients()"
-            >
-              <option value="">
-                {{ filter.label }}
-              </option>
-              <option
-                v-for="option in filter.options"
-                :key="option.value"
-                :value="option.value"
+            <div class="flex items-center space-x-3">
+              <img
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+                class="flex-shrink-0 w-6 h-6 rounded-full"
               >
-                {{ option.name }}
-              </option>
-            </select>
-          </td>
-          <td
-            v-if="headers.length - filters.length > 0"
-            :colspan="headers.length - filters.length"
-          ></td>
-        </tr>
-        <tr
-          class="border-b border-gray-300 hover:text-gray-900 hover:bg-gray-200"
-          v-for="client in clients"
-          :key="client.id"
-        >
-          <td>
-            {{ client.id }}
-          </td>
-          <td>
-            {{ client.first_name }}
-          </td>
-          <td>
-            {{ client.last_name }}
-          </td>
-          <td>{{ client.phone }}</td>
-          <td>{{ client.sex }}</td>
-          <td>{{ client.created_at ? client.created_at : 'N/A' }}</td>
-          <td>{{ client.updated_at ? client.updated_at : 'N/A' }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <ul v-if="pagination">
-      <li
-        v-for="(page, index) in pagination.totalPages"
-        :key="index"
-      >
-        <button @click="fetchClients(page)">
-          {{ page }}
-        </button>
-      </li>
-    </ul>
+              <span class="block truncate">
+                Tom Cook
+              </span>
+            </div>
+            <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+              <svg-icon
+                name="select-arrows"
+                class="w-5 h-5 text-gray-400"
+              ></svg-icon>
+            </span>
+          </button>
+        </span>
+
+        <!--
+      Select popover, show/hide based on select state.
+
+      Entering: ""
+        From: ""
+        To: ""
+      Leaving: "transition ease-in duration-100"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+        <div class="absolute w-full mt-1 bg-white rounded-md shadow-lg">
+          <ul
+            tabindex="-1"
+            role="listbox"
+            aria-labelledby="listbox-label"
+            aria-activedescendant="listbox-item-3"
+            class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-56 focus:outline-none sm:text-sm sm:leading-5"
+          >
+            <!--
+          Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+
+          Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+        -->
+            <li
+              id="listbox-item-0"
+              role="option"
+              class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9"
+            >
+              <div class="flex items-center space-x-3">
+                <img
+                  src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
+                  alt=""
+                  class="flex-shrink-0 w-6 h-6 rounded-full"
+                >
+                <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                <span class="block font-normal truncate">
+                  Wade Cooper
+                </span>
+              </div>
+
+              <!--
+            Checkmark, only display for selected option.
+
+            Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+          -->
+              <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+                <!-- Heroicon name: check -->
+                <svg
+                  class="w-5 h-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </li>
+
+            <!-- More options... -->
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
