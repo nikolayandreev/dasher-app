@@ -27,12 +27,14 @@ module.exports = {
     },
   },
   variants: {
-    textColor: ['responsive', 'hover', 'focus', 'group-focus', 'group-hover'],
+    textColor: ['responsive', 'hover', 'focus', 'active', 'group-focus', 'group-hover'],
+    shadowOutline: ['focus', 'active']
   },
   plugins: [
     require('postcss-import'),
     require('tailwindcss'),
     require('autoprefixer'),
+    require('tailwindcss-shadow-outline-colors')(),
   ],
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css

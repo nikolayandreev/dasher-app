@@ -15,11 +15,6 @@
 </template>
 
 <script>
-import LoginForm from '~/components/Auth/LoginForm'
-import RegisterForm from '~/components/Auth/RegisterForm'
-import ForgotPasswordForm from '~/components/Auth/ForgotPasswordForm'
-import ResetPasswordForm from '~/components/Auth/ResetPasswordForm'
-
 export default {
   props: {
     form: {
@@ -34,10 +29,10 @@ export default {
   auth: 'guest',
   layout: 'default',
   components: {
-    signin: LoginForm,
-    signup: RegisterForm,
-    'forgot-password': ForgotPasswordForm,
-    'reset-password': ResetPasswordForm,
+    signin: () => import('~/components/Auth/LoginForm'),
+    signup: () => import('~/components/Auth/RegisterForm'),
+    'forgot-password': () => import('~/components/Auth/ForgotPasswordForm'),
+    'reset-password': () => import('~/components/Auth/ResetPasswordForm'),
   },
 }
 </script>

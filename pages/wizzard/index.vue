@@ -1,0 +1,183 @@
+<template>
+  <div class="container">
+    <div class="pt-8 text-center">
+      <h1 class="text-5xl font-medium text-gray-900">Добре дошли в Dasher!</h1>
+      <p class="mt-4 text-lg text-gray-700">За да започнете да използвате Dasher, първо трябва да настроим вашият акаунт в няколко лесни стъпки.</p>
+    </div>
+
+    <nav class="flex flex-row flex-no-wrap items-center justify-around mx-auto mt-10">
+      <div
+        class="w-full pb-4 text-center border-b-2"
+        :class="{
+          'border-pink-600': tab.key === step,
+          'border-pink-200': tab.index < index,
+          'border-gray-200': tab.index > index,
+        }"
+        v-for="tab in tabs"
+        :key="tab.key"
+      >
+        <button
+          class="outline-none focus:outline-none"
+          @click="tab.index < index || (tab.index - progress === 1) ? switchStep(index, tab.index) : false"
+        >
+          <div
+            class="inline-block px-3 py-3 transition duration-200 rounded-full"
+            :class="{
+          'bg-pink-600': tab.key === step,
+          'bg-pink-200': tab.index < index,
+          'bg-gray-200': tab.index > index
+        }"
+          >
+            <svg-icon
+              :name="tab.icon"
+              class="w-8 h-8 mx-auto transition duration-200 fill-current"
+              :class="{
+                'text-pink-600': tab.index < index,
+                'text-gray-500': tab.index > index, 
+                'text-pink-200': tab.index === index
+              }"
+            />
+          </div>
+          <div
+            class="block mt-2 text-lg text-gray-800 transition duration-200"
+            :class="{'font-medium text-pink-600': tab.index === index}"
+          >
+            {{ tab.name }}
+          </div>
+        </button>
+      </div>
+    </nav>
+    <transition
+      :name="`slide-${direction === 'left' ? 'left' : 'right'}`"
+      mode="out-in"
+    >
+      <component :is="step"></component>
+    </transition>
+  </div>
+</template>
+
+<script>
+export default {
+  layout: 'wizzard',
+  data() {
+    return {
+      step: 'info',
+      direction: 'right',
+      index: 1,
+      progress: 0,
+      tabs: [
+        {
+          key: 'info',
+          name: 'Информация за обект',
+          icon: 'information-outline',
+          index: 1,
+        },
+        {
+          key: 'worktime',
+          name: 'Работно време',
+          icon: 'clock-outline',
+          index: 2,
+        },
+        {
+          key: 'employees',
+          name: 'Добави служители',
+          icon: 'account-group-outline',
+          index: 3,
+        },
+        {
+          key: 'settings',
+          name: 'Настройки',
+          icon: 'cog-outline',
+          index: 4,
+        },
+      ],
+    }
+  },
+  watch: {
+    index(newValue, oldValue) {
+      const active = this.tabs.find((elem) => elem.index === newValue)
+
+      this.switchStep(oldValue, newValue)
+    },
+  },
+  components: {
+    info: () => import('~/components/Wizzard/Owners/VendorsInfoStep'),
+    worktime: () => import('~/components/Wizzard/Owners/VendorsWorktimeStep'),
+    employees: () => import('~/components/Wizzard/Owners/VendorsEmployeesStep'),
+    settings: () => import('~/components/Wizzard/Owners/VendorsSettingsStep'),
+  },
+  methods: {
+    switchStep(fromIndex, toIndex) {
+      if (!fromIndex || !toIndex) {
+        return false
+      }
+
+      const fromTab = this.tabs.find((elem) => elem.index === fromIndex)
+      const toTab = this.tabs.find((elem) => elem.index === toIndex)
+
+      this.step = toTab.key
+      this.index = toTab.index
+
+      if (fromTab.index > toTab.index) {
+        this.direction = 'left'
+      } else {
+        this.direction = 'right'
+      }
+    },
+  },
+  created() {
+    this.$nuxt.$on('wizzard-switch', (step) => (this.index = step))
+    this.$nuxt.$on('wizzard-finished', (step) => (this.progress = step))
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+$opacityFrom: 0;
+$opacityTo: 0.6;
+$transitionTime: 120ms;
+$pullLeft: -100px;
+$pullRight: 100px;
+
+.slide-left-enter {
+  transform: translateX($pullLeft);
+  opacity: $opacityFrom;
+  transition: all $transitionTime;
+}
+.slide-left-enter-to {
+  transform: translateX(0);
+  opacity: $opacityTo;
+  transition: all $transitionTime;
+}
+.slide-left-leave {
+  transform: translateX(0);
+  opacity: $opacityTo;
+  transition: all $transitionTime;
+}
+.slide-left-leave-to {
+  transform: translateX($pullRight);
+  opacity: $opacityFrom;
+  transition: all $transitionTime;
+}
+
+.slide-right-enter {
+  transform: translateX($pullRight);
+  opacity: $opacityFrom;
+  transition: all $transitionTime;
+}
+.slide-right-enter-to {
+  transform: translateX(0);
+  opacity: $opacityTo;
+  transition: all $transitionTime;
+}
+.slide-right-leave {
+  transform: translateX(0);
+  opacity: $opacityTo;
+  transition: all $transitionTime;
+}
+.slide-right-leave-to {
+  transform: translateX($pullLeft);
+  opacity: $opacityFrom;
+  transition: all $transitionTime;
+}
+</style>

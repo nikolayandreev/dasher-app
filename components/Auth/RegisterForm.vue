@@ -94,12 +94,12 @@
       <div class="w-full my-2 form-group">
         <label for="subscription">Избери план</label>
         <div class="flex flex-row flex-wrap overflow-hidden rounded-lg">
-          <RegisterSubscriptionButton
+          <SubscriptionButton
             :selectedSubscription="selectedSubscription"
             :subscription="plans.basic"
             @click.prevent="registerForm.subscription = 'basic'"
           />
-          <RegisterSubscriptionButton
+          <SubscriptionButton
             :selectedSubscription="selectedSubscription"
             :subscription="plans.pro"
             @click.prevent="registerForm.subscription = 'pro'"
@@ -141,14 +141,10 @@
 </template>
 
 <script>
-import RegisterSubscriptionButton from '~/components/Auth/Register/SubscriptionButton'
-
 export default {
   auth: 'guest',
   layout: 'auth',
-  components: {
-    RegisterSubscriptionButton,
-  },
+  components: {},
   data() {
     return {
       plans: {
@@ -199,7 +195,9 @@ export default {
             password_confirmation: this.registerForm.passwordConfirmed,
           })
           .then((res) => {
-            window.location.href = res.data.data.redirect
+            setTimeout(() => {
+              window.location.href = res.data.data.redirect
+            }, 600)
           })
           .catch((err) => {
             if (err.response.status === 422) {

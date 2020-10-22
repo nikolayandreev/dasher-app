@@ -36,12 +36,16 @@ export default {
   },
   methods: {
     setSelectedVendor() {
-      this.$store.dispatch(
-        'commitVendor',
-        this.$auth.user.vendors.find(
-          (elem) => elem.id === parseInt(this.$store.state.vendor_id)
+      if (this.$auth.user.vendors) {
+        return this.$store.dispatch(
+          'commitVendor',
+          this.$auth.user.vendors.find(
+            (elem) => elem.id === parseInt(this.$store.state.vendor_id)
+          )
         )
-      )
+      }
+
+      return this.$router.push('/wizzard')
     },
   },
   created() {

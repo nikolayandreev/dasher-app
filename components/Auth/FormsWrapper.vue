@@ -25,7 +25,9 @@ export default {
   },
   mounted() {
     window.addEventListener('popstate', function (event) {
-      window.location.reload()
+      if (window.location.pathname === event.target.$nuxt._route.path) {
+        return (window.location = event.target.$nuxt._route.path)
+      }
     })
 
     this.$nuxt.$on('go-to-register', () => {
