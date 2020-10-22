@@ -2,7 +2,10 @@
   <ul>
     <template v-for="link in headerNav">
       <li
-        v-if="$auth.user.permissions && $auth.user.permissions.includes(link.authorize)"
+        v-if="
+          $auth.user.permissions &&
+          $auth.user.permissions.includes(link.authorize)
+        "
         :key="link.name"
       >
         <nuxt-link
@@ -32,9 +35,9 @@
             viewBox="0 0 24 24"
             class="w-6 h-6 ml-auto text-gray-800 transition-all duration-300 fill-current"
             :class="{
-            'transition-all transform rotate-180': shouldOpenSubMenu(link),
-            'text-pink-600': link.active,
-          }"
+              'transition-all transform rotate-180': shouldOpenSubMenu(link),
+              'text-pink-600': link.active,
+            }"
           >
             <path
               xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +267,7 @@ export default {
   @apply text-pink-600 bg-pink-100 border-r-4 border-pink-600;
 }
 .nuxt-link-exact-active {
-  @apply text-pink-600  border-pink-700 border-r-4 bg-pink-100 transition-all;
+  @apply text-pink-600  border-pink-600 border-r-4 bg-pink-100 transition-all;
   svg {
     @apply text-pink-600;
   }

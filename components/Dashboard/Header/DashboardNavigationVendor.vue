@@ -1,19 +1,16 @@
 <template>
   <client-only>
-    <div class="flex flex-row flex-no-wrap items-center px-4 py-2 my-4">
-      <div class="w-1/5 px-4 py-4 bg-pink-600 rounded-lg">
-        <svg-icon
-          name="store"
-          class="w-6 h-6 text-pink-100 fill-current"
-        />
+    <div class="flex flex-row flex-no-wrap items-start px-4 py-2 my-4">
+      <div class="w-1/5 px-3 py-3 bg-pink-200 rounded-md">
+        <svg-icon name="store" class="w-8 h-8 text-pink-600 fill-current" />
       </div>
-      <div
-        class="w-4/5 pl-4"
-        v-if="selectedVendor"
-      >
+      <div class="w-4/5 pl-4" v-if="selectedVendor">
         <div class="flex flex-row flex-wrap items-center">
           <div
-            :class="{'w-10/12': $permission('vendor.edit'), 'w-full': !$permission('vendor.edit')}"
+            :class="{
+              'w-10/12': $permission('vendor.edit'),
+              'w-full': !$permission('vendor.edit'),
+            }"
             class="mb-1"
           >
             <div
@@ -23,7 +20,9 @@
               <select
                 id="vendor"
                 class="pr-3 -ml-1 -mr-1 text-gray-900 appearance-none cursor-pointer font-display"
-                style="background-image: url('../assets/sprite/svg/chevron-down.svg')"
+                style="
+                  background-image: url('../assets/sprite/svg/chevron-down.svg');
+                "
                 @change="changeVendor($event)"
               >
                 <option
@@ -38,14 +37,19 @@
               <svg-icon
                 name="select-arrows"
                 class="absolute right-0 w-4 h-4 text-gray-600 pointer-events-none fill-current"
-                style="top:50%; transform:translateY(-50%);"
+                style="top: 50%; transform: translateY(-50%)"
               />
             </div>
             <h4
-              class="text-gray-900 "
-              :class="{'w-10/12': $permission('vendor.edit'), 'w-full': !$permission('vendor.edit')}"
+              class="tracking-tight text-gray-900"
+              :class="{
+                'w-10/12': $permission('vendor.edit'),
+                'w-full': !$permission('vendor.edit'),
+              }"
               v-else
-            >{{ selectedVendor.name }}</h4>
+            >
+              {{ selectedVendor.name }}
+            </h4>
           </div>
           <nuxt-link
             v-if="$permission('vendor.edit')"
@@ -59,8 +63,12 @@
             />
           </nuxt-link>
         </div>
-        <small class="block w-full -mb-1 font-medium text-gray-600">{{  selectedVendor.address.street}}</small>
-        <small class="block w-full text-gray-600">{{  selectedVendor.address.additional}}</small>
+        <small class="block w-full -mb-1 font-medium text-gray-600">{{
+          selectedVendor.address.street
+        }}</small>
+        <small class="block w-full text-gray-600">{{
+          selectedVendor.address.additional
+        }}</small>
       </div>
     </div>
   </client-only>
