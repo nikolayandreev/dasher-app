@@ -1,10 +1,20 @@
 export const state = () => ({
+  steps: [
+    { step: 1, status: 'pending' },
+    { step: 2, status: 'pending' },
+    { step: 3, status: 'pending' },
+    { step: 4, status: 'pending' },
+  ],
   address: null,
   name: null,
   worktime: null,
 });
 
 export const mutations = {
+  setStep(state, payload) {
+    const step = state.steps.find(item => item.step === payload.step)
+    step.status = payload.status;
+  },
   setAddress(state, payload) {
     state.address = payload;
   },
@@ -17,6 +27,9 @@ export const mutations = {
 };
 
 export const actions = {
+  commitStep({ commit }, payload) {
+    commit('setStep', payload);
+  },
   commitAddress({ commit }, payload) {
     commit('setAddress', payload);
   },
@@ -29,6 +42,9 @@ export const actions = {
 };
 
 export const getters = {
+  getStep(state) {
+    return state.steps;
+  },
   getAddress(state) {
     return state.address;
   },

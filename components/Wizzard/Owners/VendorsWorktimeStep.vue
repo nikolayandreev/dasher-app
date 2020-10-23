@@ -1,57 +1,85 @@
 <template>
   <div>
+    <h2 class="mt-8 text-3xl">Работно време</h2>
+    <p class="mb-6 text-sm text-gray-700">Определи разрешеното време за записване на резервации</p>
+
     <div>
-      <div>
-        {{ allowedDays }}
-        <input
-          id="days[0]"
-          type="checkbox"
-          value="0"
-          name="days[0]"
-          v-model="allowedDays"
-        />
-        <label for="days[0]">Понеделник</label>
-      </div>
-      <div>
-        <input
-          id="days[1]"
-          type="checkbox"
-          value="1"
-          v-model="allowedDays"
-          name="days[1]"
-        />
-        <label for="days[1]">Вторник</label>
-      </div>
-      <div>
-        <input
-          id="days[2]"
-          type="checkbox"
-          value="2"
-          v-model="allowedDays"
-          name="days[2]"
-        />
-        <label for="days[2]">Сряда</label>
-      </div>
-      <div>
-        <input
-          id="days[3]"
-          type="checkbox"
-          value="3"
-          v-model="allowedDays"
-          name="days"
-        />
-        <label for="days[3]">Четвъртък</label>
-      </div>
-      <div>
-        <input
-          id="days[4]"
-          type="checkbox"
-          value="4"
-          v-model="allowedDays"
-          name="days"
-        />
-        <label for="days[4]">Петък</label>
-      </div>
+      <span class="px-2 py-2 text-sm font-medium text-green-500 bg-green-100 rounded-md shadow-sm">Отворено</span>
+      <span class="px-2 py-2 text-sm font-medium text-red-500 bg-red-100 rounded-md shadow-sm">Затворено</span>
+      <span class="px-2 py-2 text-sm font-medium text-orange-500 bg-orange-100 rounded-md shadow-sm">Проблем с въведените данни</span>
+    </div>
+
+    <div class="mt-4 rounded-md shadow-md">
+      <WorktimeEntry
+        day="Понеделник"
+        :id="'days[0]'"
+        :valueFrom="worktime['0'].from"
+        @input-from="worktime['0'].from = $event"
+        :valueTo="worktime['0'].to"
+        @input-to="worktime['0'].to = $event"
+        :valueActive="worktime['0'].active"
+        @input="worktime['0'].active = $event"
+      />
+      <WorktimeEntry
+        day="Вторник"
+        :id="'days[1]'"
+        :valueFrom="worktime['1'].from"
+        @input-from="worktime['1'].from = $event"
+        :valueTo="worktime['1'].to"
+        @input-to="worktime['1'].to = $event"
+        :valueActive="worktime['1'].active"
+        @input="worktime['1'].active = $event"
+      />
+      <WorktimeEntry
+        day="Сряда"
+        :id="'days[2]'"
+        :valueFrom="worktime['2'].from"
+        @input-from="worktime['2'].from = $event"
+        :valueTo="worktime['2'].to"
+        @input-to="worktime['2'].to = $event"
+        :valueActive="worktime['2'].active"
+        @input="worktime['2'].active = $event"
+      />
+      <WorktimeEntry
+        day="Четвъртък"
+        :id="'days[3]'"
+        :valueFrom="worktime['3'].from"
+        @input-from="worktime['3'].from = $event"
+        :valueTo="worktime['3'].to"
+        @input-to="worktime['3'].to = $event"
+        :valueActive="worktime['3'].active"
+        @input="worktime['3'].active = $event"
+      />
+      <WorktimeEntry
+        day="Петък"
+        :id="'days[4]'"
+        :valueFrom="worktime['4'].from"
+        @input-from="worktime['4'].from = $event"
+        :valueTo="worktime['4'].to"
+        @input-to="worktime['4'].to = $event"
+        :valueActive="worktime['4'].active"
+        @input="worktime['4'].active = $event"
+      />
+      <WorktimeEntry
+        day="Събота"
+        :id="'days[5]'"
+        :valueFrom="worktime['5'].from"
+        @input-from="worktime['5'].from = $event"
+        :valueTo="worktime['5'].to"
+        @input-to="worktime['5'].to = $event"
+        :valueActive="worktime['5'].active"
+        @input="worktime['5'].active = $event"
+      />
+      <WorktimeEntry
+        day="Неделя"
+        :id="'days[6]'"
+        :valueFrom="worktime['6'].from"
+        @input-from="worktime['6'].from = $event"
+        :valueTo="worktime['6'].to"
+        @input-to="worktime['6'].to = $event"
+        :valueActive="worktime['6'].active"
+        @input="worktime['6'].active = $event"
+      />
     </div>
 
     <div class="flex flex-row flex-no-wrap items-center justify-end pt-4 mt-4">
@@ -82,56 +110,77 @@ export default {
     return {
       formPending: false,
       errors: null,
-      allowedDays: [],
-      worktimeForm: {
-        days: null,
-        hours_from: null,
-        hours_to: null,
+      worktime: {
+        0: {
+          active: true,
+          from: '08:00',
+          to: '20:00',
+        },
+        1: {
+          active: true,
+          from: '08:00',
+          to: '20:00',
+        },
+        2: {
+          active: true,
+          from: '08:00',
+          to: '20:00',
+        },
+        3: {
+          active: true,
+          from: '08:00',
+          to: '20:00',
+        },
+        4: {
+          active: true,
+          from: '08:00',
+          to: '20:00',
+        },
+        5: {
+          active: true,
+          from: '10:00',
+          to: '17:00',
+        },
+        6: {
+          active: true,
+          from: '10:00',
+          to: '17:00',
+        },
       },
     }
   },
-  validations: {
-    worktimeForm: {},
-  },
-  mounted() {},
   computed: {
-    storedName() {
-      return this.$store.getters['wizzard/getName']
+    storedWorktime() {
+      return this.$store.getters['wizzard/getWorktime']
     },
-    storedAddress() {
-      return this.$store.getters['wizzard/getAddress']
-    },
+  },
+  mounted() {
+    this.mapWorktime()
   },
   methods: {
     onSubmit() {
       this.formPending = true
-      this.$v.worktimeForm.$touch()
-      if (this.$v.worktimeForm.$invalid) {
-        this.formPending = false
-      } else {
-        // return this.storeVendorInfo()
-      }
+
+      this.$store.dispatch('wizzard/commitStep', {
+        step: 2,
+        status: 'finished',
+      })
+
+      return $nuxt.$emit('wizzard-switch', 3)
     },
-    storeVendorInfo() {
-      this.$store.dispatch('wizzard/commitName', this.worktimeForm.name)
-      this.$store.dispatch('wizzard/commitAddress', this.worktimeForm.address)
+    storeWorktime() {
+      this.$store.dispatch('wizzard/commitWorktime', this.worktime)
       this.formPending = false
-      $nuxt.$emit('wizzard-finished', 1)
-
-      return $nuxt.$emit('wizzard-switch', 2)
     },
 
-    mapVendorInfo() {
-      if (this.storedAddress) {
-        this.vendorForm.address.area_id = this.storedAddress.area_id
-        this.vendorForm.address.street = this.storedAddress.street
-        this.vendorForm.address.additional = this.storedAddress.additional
-      }
-
-      if (this.storedName) {
-        this.vendorForm.name = this.storedName
+    mapWorktime() {
+      if (this.storedWorktime) {
+        this.worktime = JSON.parse(JSON.stringify(this.storedWorktime))
       }
     },
+  },
+  beforeDestroy() {
+    this.storeWorktime()
   },
 }
 </script>

@@ -24,9 +24,9 @@ export default {
     DynamicForm,
   },
   mounted() {
-    window.addEventListener('popstate', function (event) {
+    window.addEventListener('popstate', (event) => {
       if (window.location.pathname === event.target.$nuxt._route.path) {
-        return (window.location = event.target.$nuxt._route.path)
+        return (this.activeForm = event.target.$nuxt._route.name)
       }
     })
 

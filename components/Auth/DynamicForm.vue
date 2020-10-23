@@ -1,5 +1,8 @@
 <template>
-  <div class="block px-4 py-6 overflow-hidden sm:px-8">
+  <div
+    class="block px-4 py-6 overflow-hidden sm:px-8"
+    v-if="loaded"
+  >
     <img
       class="h-8 mx-auto mb-4"
       src="/images/dasher-logo.svg"
@@ -16,6 +19,8 @@
 
 <script>
 export default {
+  auth: 'guest',
+  layout: 'default',
   props: {
     form: {
       required: true,
@@ -26,13 +31,19 @@ export default {
         ),
     },
   },
-  auth: 'guest',
-  layout: 'default',
+  data() {
+    return {
+      loaded: false,
+    }
+  },
   components: {
     signin: () => import('~/components/Auth/LoginForm'),
     signup: () => import('~/components/Auth/RegisterForm'),
     'forgot-password': () => import('~/components/Auth/ForgotPasswordForm'),
     'reset-password': () => import('~/components/Auth/ResetPasswordForm'),
+  },
+  mounted() {
+    this.loaded = true
   },
 }
 </script>

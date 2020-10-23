@@ -24,6 +24,11 @@ import DashboardNavigation from '~/components/Dashboard/Header/DashboardNavigati
 import DashboardNavigationVendor from '~/components/Dashboard/Header/DashboardNavigationVendor'
 
 export default {
+  middleware({ store, redirect }) {
+    if (!store.state.auth.user.vendors) {
+      return redirect('/wizzard')
+    }
+  },
   components: {
     DashboardNavbar,
     DashboardNavigationVendor,
@@ -44,8 +49,6 @@ export default {
           )
         )
       }
-
-      return this.$router.push('/wizzard')
     },
   },
   created() {

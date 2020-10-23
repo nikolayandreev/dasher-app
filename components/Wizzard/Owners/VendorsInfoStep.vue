@@ -145,29 +145,32 @@ export default {
       if (this.$v.vendorForm.$invalid) {
         this.formPending = false
       } else {
-        return this.storeVendorInfo()
+        this.$store.dispatch('wizzard/commitStep', {
+          step: 1,
+          status: 'finished',
+        })
+
+        return $nuxt.$emit('wizzard-switch', 2)
       }
     },
     storeVendorInfo() {
       this.$store.dispatch('wizzard/commitName', this.vendorForm.name)
       this.$store.dispatch('wizzard/commitAddress', this.vendorForm.address)
       this.formPending = false
-      $nuxt.$emit('wizzard-finished', 1)
-
-      return $nuxt.$emit('wizzard-switch', 2)
     },
 
     mapVendorInfo() {
       if (this.storedAddress) {
-        this.vendorForm.address.area_id = this.storedAddress.area_id
-        this.vendorForm.address.street = this.storedAddress.street
-        this.vendorForm.address.additional = this.storedAddress.additional
+        this.vendorForm.address = JSON.parse(JSON.stringify(this.storedAddress))
       }
 
       if (this.storedName) {
         this.vendorForm.name = this.storedName
       }
     },
+  },
+  beforeDestroy() {
+    this.storeVendorInfo()
   },
 }
 </script>
