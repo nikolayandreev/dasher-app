@@ -1,9 +1,6 @@
 <template>
   <div
-    class="flex flex-row flex-no-wrap items-center px-4 py-2 transition duration-200 border-b border-gray-300"
-    :class="{'bg-red-100': !valueActive,
-    'bg-green-100': valueActive && valueFrom && valueTo,
-    'bg-orange-100': valueActive && (!valueFrom || !valueTo)}"
+    class="flex flex-row flex-no-wrap items-center justify-around py-4 transition duration-200 border-b border-gray-300"
   >
     <div class="w-40">
       <input
@@ -13,19 +10,15 @@
         :checked="valueActive"
         @change="$emit('input', !valueActive)"
       />
-      <label
-        :for="id"
-        class="mr-4 font-medium cursor-pointer select-none"
-        :class="{'text-red-500': !valueActive,
-    'text-green-500': valueActive && valueFrom && valueTo,
-    'text-orange-500': valueActive && (!valueFrom || !valueTo)}"
-      >{{ day }}</label>
+      <label :for="id" class="mr-4 font-medium cursor-pointer select-none">{{
+        day
+      }}</label>
     </div>
 
     <div>
       <span class="mr-2 text-sm text-gray-700">От</span>
       <date-picker
-        style="width:85px;"
+        style="width: 85px"
         prefix-class="xmx"
         :value="valueFrom"
         type="time"
@@ -34,6 +27,7 @@
         format="HH:mm"
         value-type="format"
         placeholder="hh:mm"
+        :clearable="false"
         :time-picker-options="timePickerOptions"
       >
         <template #icon-calendar>
@@ -43,7 +37,7 @@
 
       <span class="ml-4 mr-2 text-sm text-gray-700">До:</span>
       <date-picker
-        style="width:85px;"
+        style="width: 85px"
         prefix-class="xmx"
         :value="valueTo"
         @input="$emit('input-to', $event)"
@@ -52,6 +46,7 @@
         format="HH:mm"
         value-type="format"
         placeholder="hh:mm"
+        :clearable="false"
         :time-picker-options="timePickerOptions"
       >
         <template #icon-calendar>

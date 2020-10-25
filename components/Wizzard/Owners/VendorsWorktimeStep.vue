@@ -1,85 +1,85 @@
 <template>
   <div>
     <h2 class="mt-8 text-3xl">Работно време</h2>
-    <p class="mb-6 text-sm text-gray-700">Определи разрешеното време за записване на резервации</p>
+    <p class="text-sm text-gray-700">
+      Определи разрешеното време за записване на резервации
+    </p>
 
-    <div>
-      <span class="px-2 py-2 text-sm font-medium text-green-500 bg-green-100 rounded-md shadow-sm">Отворено</span>
-      <span class="px-2 py-2 text-sm font-medium text-red-500 bg-red-100 rounded-md shadow-sm">Затворено</span>
-      <span class="px-2 py-2 text-sm font-medium text-orange-500 bg-orange-100 rounded-md shadow-sm">Проблем с въведените данни</span>
-    </div>
-
-    <div class="mt-4 rounded-md shadow-md">
-      <WorktimeEntry
-        day="Понеделник"
-        :id="'days[0]'"
-        :valueFrom="worktime['0'].from"
-        @input-from="worktime['0'].from = $event"
-        :valueTo="worktime['0'].to"
-        @input-to="worktime['0'].to = $event"
-        :valueActive="worktime['0'].active"
-        @input="worktime['0'].active = $event"
-      />
-      <WorktimeEntry
-        day="Вторник"
-        :id="'days[1]'"
-        :valueFrom="worktime['1'].from"
-        @input-from="worktime['1'].from = $event"
-        :valueTo="worktime['1'].to"
-        @input-to="worktime['1'].to = $event"
-        :valueActive="worktime['1'].active"
-        @input="worktime['1'].active = $event"
-      />
-      <WorktimeEntry
-        day="Сряда"
-        :id="'days[2]'"
-        :valueFrom="worktime['2'].from"
-        @input-from="worktime['2'].from = $event"
-        :valueTo="worktime['2'].to"
-        @input-to="worktime['2'].to = $event"
-        :valueActive="worktime['2'].active"
-        @input="worktime['2'].active = $event"
-      />
-      <WorktimeEntry
-        day="Четвъртък"
-        :id="'days[3]'"
-        :valueFrom="worktime['3'].from"
-        @input-from="worktime['3'].from = $event"
-        :valueTo="worktime['3'].to"
-        @input-to="worktime['3'].to = $event"
-        :valueActive="worktime['3'].active"
-        @input="worktime['3'].active = $event"
-      />
-      <WorktimeEntry
-        day="Петък"
-        :id="'days[4]'"
-        :valueFrom="worktime['4'].from"
-        @input-from="worktime['4'].from = $event"
-        :valueTo="worktime['4'].to"
-        @input-to="worktime['4'].to = $event"
-        :valueActive="worktime['4'].active"
-        @input="worktime['4'].active = $event"
-      />
-      <WorktimeEntry
-        day="Събота"
-        :id="'days[5]'"
-        :valueFrom="worktime['5'].from"
-        @input-from="worktime['5'].from = $event"
-        :valueTo="worktime['5'].to"
-        @input-to="worktime['5'].to = $event"
-        :valueActive="worktime['5'].active"
-        @input="worktime['5'].active = $event"
-      />
-      <WorktimeEntry
-        day="Неделя"
-        :id="'days[6]'"
-        :valueFrom="worktime['6'].from"
-        @input-from="worktime['6'].from = $event"
-        :valueTo="worktime['6'].to"
-        @input-to="worktime['6'].to = $event"
-        :valueActive="worktime['6'].active"
-        @input="worktime['6'].active = $event"
-      />
+    <div class="flex flex-row flex-no-wrap mt-6">
+      <div class="w-2/4">
+        <WorktimeEntry
+          day="Понеделник"
+          :id="'days[0]'"
+          :valueFrom="worktime['0'].from"
+          @input-from="worktime['0'].from = $event"
+          :valueTo="worktime['0'].to"
+          @input-to="worktime['0'].to = $event"
+          :valueActive="worktime['0'].active"
+          @input="worktime['0'].active = $event"
+        />
+        <WorktimeEntry
+          day="Вторник"
+          :id="'days[1]'"
+          :valueFrom="worktime['1'].from"
+          @input-from="worktime['1'].from = $event"
+          :valueTo="worktime['1'].to"
+          @input-to="worktime['1'].to = $event"
+          :valueActive="worktime['1'].active"
+          @input="worktime['1'].active = $event"
+        />
+        <WorktimeEntry
+          day="Сряда"
+          :id="'days[2]'"
+          :valueFrom="worktime['2'].from"
+          @input-from="worktime['2'].from = $event"
+          :valueTo="worktime['2'].to"
+          @input-to="worktime['2'].to = $event"
+          :valueActive="worktime['2'].active"
+          @input="worktime['2'].active = $event"
+        />
+        <WorktimeEntry
+          day="Четвъртък"
+          :id="'days[3]'"
+          :valueFrom="worktime['3'].from"
+          @input-from="worktime['3'].from = $event"
+          :valueTo="worktime['3'].to"
+          @input-to="worktime['3'].to = $event"
+          :valueActive="worktime['3'].active"
+          @input="worktime['3'].active = $event"
+        />
+      </div>
+      <div class="w-2/4">
+        <WorktimeEntry
+          day="Петък"
+          :id="'days[4]'"
+          :valueFrom="worktime['4'].from"
+          @input-from="worktime['4'].from = $event"
+          :valueTo="worktime['4'].to"
+          @input-to="worktime['4'].to = $event"
+          :valueActive="worktime['4'].active"
+          @input="worktime['4'].active = $event"
+        />
+        <WorktimeEntry
+          day="Събота"
+          :id="'days[5]'"
+          :valueFrom="worktime['5'].from"
+          @input-from="worktime['5'].from = $event"
+          :valueTo="worktime['5'].to"
+          @input-to="worktime['5'].to = $event"
+          :valueActive="worktime['5'].active"
+          @input="worktime['5'].active = $event"
+        />
+        <WorktimeEntry
+          day="Неделя"
+          :id="'days[6]'"
+          :valueFrom="worktime['6'].from"
+          @input-from="worktime['6'].from = $event"
+          :valueTo="worktime['6'].to"
+          @input-to="worktime['6'].to = $event"
+          :valueActive="worktime['6'].active"
+          @input="worktime['6'].active = $event"
+        />
+      </div>
     </div>
 
     <div class="flex flex-row flex-no-wrap items-center justify-end pt-4 mt-4">
@@ -91,7 +91,7 @@
       </button>
       <button
         :disabled="formPending"
-        :class="{pending: formPending}"
+        :class="{ pending: formPending }"
         @click="onSubmit"
         class="px-16 py-3 ml-10 font-medium tracking-wide text-pink-600 transition duration-200 bg-pink-200 rounded-md font-display hover:bg-pink-600 hover:text-white focus:shadow-outline-pink-600 focus:outline-none"
       >
