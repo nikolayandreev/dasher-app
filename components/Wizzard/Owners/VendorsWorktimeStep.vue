@@ -7,78 +7,36 @@
 
     <div class="flex flex-row flex-no-wrap mt-6">
       <div class="w-2/4">
-        <WorktimeEntry
-          day="Понеделник"
-          :id="'days[0]'"
-          :valueFrom="worktime['0'].from"
-          @input-from="worktime['0'].from = $event"
-          :valueTo="worktime['0'].to"
-          @input-to="worktime['0'].to = $event"
-          :valueActive="worktime['0'].active"
-          @input="worktime['0'].active = $event"
-        />
-        <WorktimeEntry
-          day="Вторник"
-          :id="'days[1]'"
-          :valueFrom="worktime['1'].from"
-          @input-from="worktime['1'].from = $event"
-          :valueTo="worktime['1'].to"
-          @input-to="worktime['1'].to = $event"
-          :valueActive="worktime['1'].active"
-          @input="worktime['1'].active = $event"
-        />
-        <WorktimeEntry
-          day="Сряда"
-          :id="'days[2]'"
-          :valueFrom="worktime['2'].from"
-          @input-from="worktime['2'].from = $event"
-          :valueTo="worktime['2'].to"
-          @input-to="worktime['2'].to = $event"
-          :valueActive="worktime['2'].active"
-          @input="worktime['2'].active = $event"
-        />
-        <WorktimeEntry
-          day="Четвъртък"
-          :id="'days[3]'"
-          :valueFrom="worktime['3'].from"
-          @input-from="worktime['3'].from = $event"
-          :valueTo="worktime['3'].to"
-          @input-to="worktime['3'].to = $event"
-          :valueActive="worktime['3'].active"
-          @input="worktime['3'].active = $event"
-        />
+        <template v-for="day in daysAvailable">
+          <WorktimeEntry
+            v-if="day.index < 5 && day.index !== 0"
+            :key="day.index"
+            :day="day.day"
+            :id="`days[${day.index}]`"
+            :valueFrom="worktime[day.index] ? worktime[day.index].from : '09:00'"
+            @input-from="worktime[day.index].from = $event"
+            :valueTo="worktime[day.index] ? worktime[day.index].to : '20:00'"
+            @input-to="worktime[day.index].to = $event"
+            :valueActive="worktime[day.index] ? worktime[day.index].active : false"
+            @input="worktime[day.index].active = $event"
+          />
+        </template>
       </div>
       <div class="w-2/4">
-        <WorktimeEntry
-          day="Петък"
-          :id="'days[4]'"
-          :valueFrom="worktime['4'].from"
-          @input-from="worktime['4'].from = $event"
-          :valueTo="worktime['4'].to"
-          @input-to="worktime['4'].to = $event"
-          :valueActive="worktime['4'].active"
-          @input="worktime['4'].active = $event"
-        />
-        <WorktimeEntry
-          day="Събота"
-          :id="'days[5]'"
-          :valueFrom="worktime['5'].from"
-          @input-from="worktime['5'].from = $event"
-          :valueTo="worktime['5'].to"
-          @input-to="worktime['5'].to = $event"
-          :valueActive="worktime['5'].active"
-          @input="worktime['5'].active = $event"
-        />
-        <WorktimeEntry
-          day="Неделя"
-          :id="'days[6]'"
-          :valueFrom="worktime['6'].from"
-          @input-from="worktime['6'].from = $event"
-          :valueTo="worktime['6'].to"
-          @input-to="worktime['6'].to = $event"
-          :valueActive="worktime['6'].active"
-          @input="worktime['6'].active = $event"
-        />
+        <template v-for="day in daysAvailable">
+          <WorktimeEntry
+            v-if="day.index >= 5 || day.index === 0"
+            :key="day.index"
+            :day="day.day"
+            :id="`days[${day.index}]`"
+            :valueFrom="worktime[day.index] ? worktime[day.index].from : '09:00'"
+            @input-from="worktime[day.index].from = $event"
+            :valueTo="worktime[day.index] ? worktime[day.index].to : '20:00'"
+            @input-to="worktime[day.index].to = $event"
+            :valueActive="worktime[day.index] ? worktime[day.index].active : false"
+            @input="worktime[day.index].active = $event"
+          />
+        </template>
       </div>
     </div>
 
@@ -103,84 +61,93 @@
 
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required, requiredIf } from 'vuelidate/lib/validators'
 
 export default {
   data() {
     return {
       formPending: false,
-      errors: null,
-      worktime: {
-        0: {
-          active: true,
-          from: '08:00',
-          to: '20:00',
+      daysAvailable: [
+        {
+          day: 'Понеделник',
+          index: 1,
         },
-        1: {
-          active: true,
-          from: '08:00',
-          to: '20:00',
+        {
+          day: 'Вторник',
+          index: 2,
         },
-        2: {
-          active: true,
-          from: '08:00',
-          to: '20:00',
+        {
+          day: 'Сряда',
+          index: 3,
         },
-        3: {
-          active: true,
-          from: '08:00',
-          to: '20:00',
+        {
+          day: 'Четвъртък',
+          index: 4,
         },
-        4: {
-          active: true,
-          from: '08:00',
-          to: '20:00',
+        {
+          day: 'Петък',
+          index: 5,
         },
-        5: {
-          active: true,
-          from: '10:00',
-          to: '17:00',
+        {
+          day: 'Събота',
+          index: 6,
         },
-        6: {
-          active: true,
-          from: '10:00',
-          to: '17:00',
+        {
+          day: 'Неделя',
+          index: 0,
         },
-      },
+      ],
+      worktime: {},
     }
   },
+  created() {
+    this.fetchVendorWorktime()
+  },
   computed: {
-    storedWorktime() {
-      return this.$store.getters['wizzard/getWorktime']
+    vendorId() {
+      const id = this.$store.getters['wizzard/getVendorId']
+      return id ? id : parseInt(localStorage.getItem('wizzard_vendor_id'))
     },
   },
-  mounted() {
-    this.mapWorktime()
+  deactivated() {
+    this.storeVendorWorktime()
   },
   methods: {
     onSubmit() {
       this.formPending = true
-
-      this.$store.dispatch('wizzard/commitStep', {
-        step: 2,
-        status: 'finished',
-      })
-
-      return $nuxt.$emit('wizzard-switch', 3)
+      this.storeVendorWorktime()
     },
-    storeWorktime() {
-      this.$store.dispatch('wizzard/commitWorktime', this.worktime)
-      this.formPending = false
-    },
+    storeVendorWorktime() {
+      this.$axios
+        .$post('/api/vendor/schedule', {
+          vendor_id: this.vendorId,
+          worktime: this.worktime,
+        })
+        .then((res) => {
+          this.formPending = false
+          this.worktime = res.data
 
-    mapWorktime() {
-      if (this.storedWorktime) {
-        this.worktime = JSON.parse(JSON.stringify(this.storedWorktime))
-      }
+          this.$store.dispatch('wizzard/commitStep', {
+            step: 2,
+            status: 'finished',
+          })
+
+          return $nuxt.$emit('wizzard-switch', 3)
+        })
+        .catch((err) => {
+          this.formPending = false
+          this.worktime = null
+          console.error(err)
+        })
     },
-  },
-  beforeDestroy() {
-    this.storeWorktime()
+    fetchVendorWorktime() {
+      this.$axios
+        .$get(`/api/vendor/${this.vendorId}/schedule`)
+        .then((res) => {
+          this.worktime = res.data
+        })
+        .catch((err) => console.error(err))
+    },
   },
 }
 </script>

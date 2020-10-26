@@ -7,6 +7,7 @@
 
     <nav class="flex flex-row flex-no-wrap items-center justify-around mx-auto mt-10">
       <div
+        :id="`wizzard-nav-${tab.index}`"
         class="w-full pb-4 text-center border-b-2"
         :class="{
           'border-pink-200': progress.find(item => item.step === tab.index && item.status === 'finished'),
@@ -52,7 +53,9 @@
       :name="`slide-${direction === 'left' ? 'left' : 'right'}`"
       mode="out-in"
     >
-      <component :is="step"></component>
+      <keep-alive>
+        <component :is="step"></component>
+      </keep-alive>
     </transition>
   </div>
 </template>

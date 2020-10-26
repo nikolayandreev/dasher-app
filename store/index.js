@@ -24,7 +24,7 @@ export const actions = {
         commit('auth/SET', { key: 'loggedIn', value: true });
       })
       .catch(err => {
-        return '/signin';
+        commit('auth/SET', { key: 'loggedIn', value: false });
       })
   },
   commitVendor({ commit }, payload) {

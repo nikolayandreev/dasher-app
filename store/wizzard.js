@@ -5,9 +5,9 @@ export const state = () => ({
     { step: 3, status: 'pending' },
     { step: 4, status: 'pending' },
   ],
-  address: null,
-  name: null,
-  worktime: null,
+  areas: null,
+  vendor_id: null,
+  address_id: null,
 });
 
 export const mutations = {
@@ -15,14 +15,14 @@ export const mutations = {
     const step = state.steps.find(item => item.step === payload.step)
     step.status = payload.status;
   },
-  setAddress(state, payload) {
-    state.address = payload;
+  setAreas(state, payload) {
+    state.areas = payload;
   },
-  setName(state, payload) {
-    state.name = payload;
+  setVendorId(state, payload) {
+    state.vendor_id = payload;
   },
-  setWorktime(state, payload) {
-    state.worktime = payload;
+  setAddressId(state, payload) {
+    state.address_id = payload;
   }
 };
 
@@ -30,28 +30,28 @@ export const actions = {
   commitStep({ commit }, payload) {
     commit('setStep', payload);
   },
-  commitAddress({ commit }, payload) {
-    commit('setAddress', payload);
+  commitAreas({ commit }, payload) {
+    commit('setAreas', payload);
   },
-  commitName({ commit }, payload) {
-    commit('setName', payload);
+  commitVendorId({ commit }, payload) {
+    commit('setVendorId', payload);
   },
-  commitWorktime({ commit }, payload) {
-    commit('setWorktime', payload);
-  },
+  commitAddressId({ commit }, payload) {
+    commit('setAddressId', payload)
+  }
 };
 
 export const getters = {
   getStep(state) {
     return state.steps;
   },
-  getAddress(state) {
-    return state.address;
+  getAreas(state) {
+    return state.areas;
   },
-  getName(state) {
-    return state.name;
+  getVendorId(state) {
+    return state.vendor_id;
   },
-  getWorktime(state) {
-    return state.worktime;
+  getAddressId(state) {
+    return state.address_id;
   }
 };

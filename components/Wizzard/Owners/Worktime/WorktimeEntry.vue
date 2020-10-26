@@ -1,18 +1,29 @@
 <template>
-  <div
-    class="flex flex-row flex-no-wrap items-center justify-around py-4 transition duration-200 border-b border-gray-300"
-  >
-    <div class="w-40">
+  <div class="flex flex-row flex-no-wrap items-center justify-around py-4 transition duration-200 border-b border-gray-300">
+    <div
+      class="flex flex-row items-center w-56 cursor-pointer"
+      @click="$emit('input', !valueActive)"
+    >
+      <svg-icon
+        :name="valueActive ? 'check-circle' : 'do-not-disturb'"
+        class="w-5 h-5 fill-current"
+        :class="{'text-green-600': valueActive,
+        'text-red-600': !valueActive}"
+      />
       <input
         :id="id"
         type="checkbox"
         :value="valueActive"
         :checked="valueActive"
         @change="$emit('input', !valueActive)"
+        class="hidden"
       />
-      <label :for="id" class="mr-4 font-medium cursor-pointer select-none">{{
-        day
-      }}</label>
+      <label
+        :for="id"
+        class="ml-2 text-xl cursor-pointer select-none font-display"
+      >
+        {{ day }}
+      </label>
     </div>
 
     <div>

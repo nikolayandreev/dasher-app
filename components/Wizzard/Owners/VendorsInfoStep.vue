@@ -16,6 +16,10 @@
         >
           Грешка при попълването!
         </span>
+        <span
+          class="block text-sm text-red-500 error"
+          v-if="errors && errors.name"
+        >{{ errors.name[0] }}</span>
       </div>
       <h3 class="mt-4 text-2xl">Адрес на обекта</h3>
       <hr class="my-4 border-gray-300" />
@@ -39,6 +43,10 @@
           >
             Грешка при попълването!
           </span>
+          <span
+            class="block text-sm text-red-500 error"
+            v-if="errors && errors.area_id"
+          >{{ errors.area_id[0] }}</span>
         </div>
         <div class="w-4/12 px-2 input-group">
           <label for="vendor[address][street]">Улица</label>
@@ -54,6 +62,10 @@
           >
             Грешка при попълването!
           </span>
+          <span
+            class="block text-sm text-red-500 error"
+            v-if="errors && errors.street"
+          >{{ errors.street[0] }}</span>
         </div>
         <div class="w-4/12 px-2 input-group">
           <label for="vendor[address][additional]">Допълнително</label>
@@ -69,6 +81,10 @@
           >
             Грешка при попълването!
           </span>
+          <span
+            class="block text-sm text-red-500 error"
+            v-if="errors && errors.additional"
+          >{{ errors.additional[0] }}</span>
         </div>
       </div>
     </div>
@@ -92,7 +108,6 @@ import { required } from 'vuelidate/lib/validators'
 export default {
   data() {
     return {
-      areas: null,
       formPending: false,
       errors: null,
       vendorForm: {
@@ -115,57 +130,79 @@ export default {
       },
     },
   },
-  mounted() {
-    this.fetchAreas()
-    this.mapVendorInfo()
+  created() {
+    this.fetchVendorInfo()
   },
   computed: {
-    storedName() {
-      return this.$store.getters['wizzard/getName']
+    vendorId() {
+      const id = this.$store.getters['wizzard/getVendorId']
+      return id ? id : parseInt(localStorage.getItem('wizzard_vendor_id'))
     },
-    storedAddress() {
-      return this.$store.getters['wizzard/getAddress']
+    areas() {
+      return this.$store.getters['wizzard/getAreas']
     },
   },
+  activated() {
+    this.$v.vendorForm.$reset()
+  },
+  deactivated() {
+    if (this.$v.vendorForm.$anyDirty) {
+      this.storeVendorInfo()
+    }
+  },
   methods: {
-    fetchAreas() {
-      return this.$axios
-        .$get('/api/areas')
-        .then((res) => {
-          this.areas = res.data
-        })
-        .catch((err) => {
-          this.areas = null
-          console.error(err)
-        })
-    },
     onSubmit() {
       this.formPending = true
       this.$v.vendorForm.$touch()
       if (this.$v.vendorForm.$invalid) {
         this.formPending = false
       } else {
-        this.$store.dispatch('wizzard/commitStep', {
-          step: 1,
-          status: 'finished',
-        })
-
-        return $nuxt.$emit('wizzard-switch', 2)
+        this.storeVendorInfo()
       }
     },
     storeVendorInfo() {
-      this.$store.dispatch('wizzard/commitName', this.vendorForm.name)
-      this.$store.dispatch('wizzard/commitAddress', this.vendorForm.address)
-      this.formPending = false
+      this.$axios
+        .$post('/api/vendor', {
+          name: this.vendorForm.name,
+          area_id: this.vendorForm.address.area_id,
+          street: this.vendorForm.address.street,
+          additional: this.vendorForm.address.additional,
+        })
+        .then((res) => {
+          this.formPending = false
+
+          localStorage.setItem('wizzard_vendor_id', res.data.vendor_id)
+          this.$store.dispatch('wizzard/commitVendorId', res.data.vendor_id)
+          this.$store.dispatch('wizzard/commitAddressId', res.data.address_id)
+
+          this.$store.dispatch('wizzard/commitStep', {
+            step: 1,
+            status: 'finished',
+          })
+
+          return $nuxt.$emit('wizzard-switch', 2)
+        })
+        .catch((err) => {
+          this.formPending = false
+          if (err.response && err.response.status === 422) {
+            this.errors = err.response.data
+          }
+        })
     },
 
-    mapVendorInfo() {
-      if (this.storedAddress) {
-        this.vendorForm.address = JSON.parse(JSON.stringify(this.storedAddress))
-      }
-
-      if (this.storedName) {
-        this.vendorForm.name = this.storedName
+    fetchVendorInfo() {
+      if (this.vendorId) {
+        this.$axios
+          .$get(`/api/vendor/${this.vendorId}?with=address`)
+          .then((res) => {
+            this.vendorForm.name = res.data.name
+            this.vendorForm.address = {
+              area_id: res.data.address.area_id,
+              street: res.data.address.street,
+              additional: res.data.address.additional,
+            }
+          })
+          .catch((err) => console.error(err))
       }
     },
   },
