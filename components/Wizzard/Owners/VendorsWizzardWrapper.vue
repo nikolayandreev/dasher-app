@@ -10,8 +10,8 @@
         :id="`wizzard-nav-${tab.index}`"
         class="w-full pb-4 text-center border-b-2"
         :class="{
-          'border-pink-200': progress.find(item => item.step === tab.index && item.status === 'finished'),
-          'border-pink-600': tab.key === step,
+          'border-brand-100': progress.find(item => item.step === tab.index && item.status === 'finished'),
+          'border-brand-500': tab.key === step,
           'border-gray-200': tab.index > index,
         }"
         v-for="tab in tabs"
@@ -24,8 +24,8 @@
           <div
             class="inline-block px-3 py-3 transition duration-200 rounded-full"
             :class="{
-          'bg-pink-200': progress.find(item => item.step === tab.index && item.status === 'finished'),
-          'bg-pink-600': tab.key === step,
+          'bg-brand-100': progress.find(item => item.step === tab.index && item.status === 'finished'),
+          'bg-brand-500': tab.key === step,
           'bg-gray-200': tab.index > index
         }"
           >
@@ -33,15 +33,15 @@
               :name="progress && progress.find(item => item.step === tab.index).status === 'finished' ? 'check' : tab.icon"
               class="w-8 h-8 mx-auto transition duration-200 fill-current"
               :class="{
-                'text-pink-200': tab.index === index,
-                'text-pink-600': tab.index !== index && progress.find(item => item.step === tab.index && item.status === 'finished'),
+                'text-brand-100': tab.index === index,
+                'text-brand-500': tab.index !== index && progress.find(item => item.step === tab.index && item.status === 'finished'),
                 'text-gray-500': tab.index > index
               }"
             />
           </div>
           <div
             class="block mt-2 text-lg text-gray-800 transition duration-200"
-            :class="{'font-medium text-pink-600': tab.index === index}"
+            :class="{'font-medium text-brand-500': tab.index === index}"
           >
             {{ tab.name }}
           </div>

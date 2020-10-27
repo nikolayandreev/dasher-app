@@ -34,7 +34,7 @@
         >Може да вижда и редактира всичко без Анализи и Плащания</EmployeeRole>
       </div>
 
-      <button class="flex flex-row flex-no-wrap items-center justify-center w-full py-3 mt-4 ml-auto transition duration-200 bg-pink-600 rounded-full hover:bg-pink-700 focus:outline-none focus:shadow-outline-pink-600">
+      <button class="flex flex-row flex-no-wrap items-center justify-center w-full py-3 mt-4 ml-auto transition duration-200 rounded-full bg-brand-500 hover:bg-brand-600 focus:outline-none focus:shadow-outline-brand-600">
         <svg-icon
           name="send"
           class="w-6 h-6 mr-2 text-white fill-current"
@@ -60,7 +60,7 @@
         :disabled="formPending"
         :class="{pending: formPending}"
         @click="onSubmit"
-        class="px-16 py-3 ml-10 font-medium tracking-wide text-pink-600 transition duration-200 bg-pink-200 rounded-md font-display hover:bg-pink-600 hover:text-white focus:shadow-outline-pink-600 focus:outline-none"
+        class="inline-block px-16 py-3 ml-10 font-medium tracking-wide transition duration-200 rounded-md bg-brand-100 text-brand-500 font-display hover:bg-brand-500 hover:text-white focus:shadow-outline-brand-600 focus:outline-none"
       >
         Следваща стъпка
       </button>
@@ -83,7 +83,7 @@ export default {
   methods: {
     onInviteSend() {},
     onSubmit() {
-      this.formPending = true
+      this.formPending = false
 
       this.$store.dispatch('wizzard/commitStep', {
         step: 3,

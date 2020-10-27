@@ -94,7 +94,7 @@
         :disabled="formPending"
         :class="{pending: formPending}"
         @click="onSubmit"
-        class="px-16 py-3 ml-10 font-medium tracking-wide text-pink-600 transition duration-200 bg-pink-200 rounded-md font-display hover:bg-pink-600 hover:text-white focus:shadow-outline-pink-600 focus:outline-none"
+        class="px-16 py-3 ml-10 font-medium tracking-wide transition duration-200 rounded-md text-brand-500 bg-brand-100 font-display hover:bg-brand-500 hover:text-white focus:shadow-outline-brand-600 focus:outline-none"
       >
         Следваща стъпка
       </button>

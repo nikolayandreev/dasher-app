@@ -19,8 +19,6 @@
 
 <script>
 export default {
-  auth: 'guest',
-  layout: 'default',
   props: {
     form: {
       required: true,

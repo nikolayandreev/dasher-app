@@ -23,6 +23,20 @@ module.exports = {
       fontFamily: {
         'display': ['Fira Sans', 'sans-serif'],
         'body': ['Ubuntu', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          50: '#FEF2F9',
+          100: '#FDE6F4',
+          200: '#FBC0E3',
+          300: '#F99AD3',
+          400: '#F44FB1',
+          500: '#EF0390',
+          600: '#D70382',
+          700: '#8F0256',
+          800: '#6C0141',
+          900: '#48012B',
+        },
       }
     },
   },

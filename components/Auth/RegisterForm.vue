@@ -126,7 +126,7 @@
       <div class="block w-full mt-4 text-center">
         <button
           type="submit"
-          class="inline-block px-40 py-3 text-white bg-pink-600 rounded-sm"
+          class="inline-block px-40 py-3 text-white rounded-sm bg-brand-500"
         >Регистрирай се</button>
         <span class="block mt-4 text-sm text-gray-600">Вече имаш акаунт?
           <a
@@ -142,8 +142,6 @@
 
 <script>
 export default {
-  auth: 'guest',
-  layout: 'auth',
   components: {},
   data() {
     return {

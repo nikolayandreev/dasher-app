@@ -70,7 +70,7 @@
     <div class="mt-4 text-center">
       <button
         type="submit"
-        class="w-full py-3 text-white bg-pink-600 rounded-sm"
+        class="w-full py-3 text-white rounded-sm bg-brand-500"
       >
         Влез в акаунта си
       </button>
@@ -87,8 +87,6 @@
 
 <script>
 export default {
-  auth: 'guest',
-  layout: 'auth',
   data() {
     return {
       formPending: false,

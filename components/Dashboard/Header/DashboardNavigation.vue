@@ -12,23 +12,23 @@
           v-if="link.url"
           :to="link.url"
           :title="link.title"
-          class="flex flex-row flex-no-wrap items-center justify-start w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent border-r-4 border-transparent outline-none hover:bg-pink-100 hover:text-pink-600 focus:outline-none"
+          class="flex flex-row flex-no-wrap items-center justify-start w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent border-r-4 border-transparent outline-none hover:bg-brand-50 hover:text-brand-500 focus:outline-none"
         >
           <svg-icon
             :name="link.icon"
-            class="w-6 h-6 mr-4 text-pink-600 transition-all duration-300 fill-current"
+            class="w-6 h-6 mr-4 transition-all duration-300 fill-current text-brand-500"
           />
           {{ link.name }}
         </nuxt-link>
         <button
           v-else
           @click.prevent="setOpened(link.name)"
-          class="flex flex-row flex-no-wrap items-center justify-start w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent border-r-4 border-transparent outline-none hover:bg-pink-100 hover:text-pink-600 focus:outline-none"
+          class="flex flex-row flex-no-wrap items-center justify-start w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent border-r-4 border-transparent outline-none hover:bg-brand-50 hover:text-brand-500 focus:outline-none"
           :class="{ opened: link.opened, hasActive: link.active }"
         >
           <svg-icon
             :name="link.icon"
-            class="w-6 h-6 mr-4 text-pink-600 transition-all duration-300 fill-current"
+            class="w-6 h-6 mr-4 transition-all duration-300 fill-current text-brand-500"
           />
           <span>{{ link.name }}</span>
           <svg
@@ -36,7 +36,7 @@
             class="w-6 h-6 ml-auto text-gray-800 transition-all duration-300 fill-current"
             :class="{
               'transition-all transform rotate-180': shouldOpenSubMenu(link),
-              'text-pink-600': link.active,
+              'text-brand-500': link.active,
             }"
           >
             <path
@@ -57,7 +57,7 @@
             <li
               v-for="child in link.children"
               :key="child.url"
-              class="inline-block w-full px-4 py-3 text-gray-800 transition-all duration-200 hover:text-pink-600"
+              class="inline-block w-full px-4 py-3 text-gray-800 transition-all duration-200 hover:text-brand-500"
             >
               <nuxt-link
                 :to="child.url"
@@ -261,19 +261,19 @@ export default {
 <style lang="scss" scoped>
 .opened,
 .hasActive {
-  @apply border-r-4 border-pink-400;
+  @apply border-r-4 border-brand-300;
 }
 .hasActive {
-  @apply text-pink-600 bg-pink-100 border-r-4 border-pink-600;
+  @apply text-brand-500 bg-brand-50 border-r-4 border-brand-500;
 }
 .nuxt-link-exact-active {
-  @apply text-pink-600  border-pink-600 border-r-4 bg-pink-100 transition-all;
+  @apply text-brand-500  border-brand-500 border-r-4 bg-brand-50 transition-all;
   svg {
-    @apply text-pink-600;
+    @apply text-brand-500;
   }
 }
 .sub-menu .nuxt-link-exact-active {
-  @apply text-pink-600 bg-transparent border-r-0 font-medium;
+  @apply text-brand-500 bg-transparent border-r-0 font-medium;
 }
 .slide-enter-active {
   transition-duration: 0.3s;

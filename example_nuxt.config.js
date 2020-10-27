@@ -60,6 +60,15 @@ export default {
   buildModules: [
     '@nuxtjs/dotenv',
     '@nuxtjs/tailwindcss',
+    [
+      '@teamnovu/nuxt-breaky',
+      {
+        enabled: true,
+        enableInProd: false,
+        colorScheme: 'auto',
+        position: 'bottomRight'
+      }
+    ]
   ],
   /*
    ** Nuxt.js modules
@@ -73,6 +82,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
+  tailwindcss: {
+    exposeConfig: true
+  },
   axios: {
     baseURL: process.env.API_URL,
     credentials: true,

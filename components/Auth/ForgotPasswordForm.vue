@@ -49,7 +49,7 @@
     <div class="block mt-4 text-center">
       <button
         type="submit"
-        class="w-full py-3 text-white bg-pink-600 rounded-sm"
+        class="w-full py-3 text-white rounded-sm bg-brand-500"
       >Възстанови парола</button>
       <a
         class="inline-block pb-px mt-4 text-sm font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
@@ -64,8 +64,6 @@
 import SuccessCheck from '~/components/utils/SuccessCheck'
 
 export default {
-  auth: 'guest',
-  layout: 'auth',
   components: {
     SuccessCheck,
   },

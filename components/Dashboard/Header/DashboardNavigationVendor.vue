@@ -1,10 +1,16 @@
 <template>
   <client-only>
     <div class="flex flex-row flex-no-wrap items-start px-4 py-2 my-4">
-      <div class="w-1/5 px-3 py-3 bg-pink-200 rounded-md">
-        <svg-icon name="store" class="w-8 h-8 text-pink-600 fill-current" />
+      <div class="w-1/5 px-3 py-3 rounded-md bg-brand-100">
+        <svg-icon
+          name="store"
+          class="w-8 h-8 fill-current text-brand-500"
+        />
       </div>
-      <div class="w-4/5 pl-4" v-if="selectedVendor">
+      <div
+        class="w-4/5 pl-4"
+        v-if="selectedVendor"
+      >
         <div class="flex flex-row flex-wrap items-center">
           <div
             :class="{
