@@ -17,9 +17,9 @@ export default {
   components: {
     ClientsGrid,
   },
-  middleware(context) {
-    if (!context.$permission('clients.view')) {
-      context.redirect('/missing-access')
+  middleware(app) {
+    if (!app.$permission('clients.view')) {
+      app.redirect('/missing-access')
     }
   },
   data() {

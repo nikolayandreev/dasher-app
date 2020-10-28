@@ -108,9 +108,9 @@
 <script>
 export default {
   layout: 'dashboard',
-  middleware(context) {
-    if (!context.$permission('employees.view')) {
-      context.redirect('/missing-access')
+  middleware(app) {
+    if (!app.$permission('employees.view')) {
+      app.redirect('/missing-access')
     }
   },
   data() {

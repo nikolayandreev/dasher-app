@@ -48,6 +48,7 @@
     </div>
     <div class="block mt-4 text-center">
       <button
+        v-if="!mailSent"
         type="submit"
         class="w-full py-3 text-white rounded-sm bg-brand-500"
       >Възстанови парола</button>

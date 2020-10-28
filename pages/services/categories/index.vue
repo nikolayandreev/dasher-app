@@ -5,9 +5,9 @@
 <script>
 export default {
   layout: 'dashboard',
-  middleware(context) {
-    if (!context.$permission('services.categories.view')) {
-      context.redirect('/missing-access')
+  middleware(app) {
+    if (!app.$permission('services.categories.view')) {
+      app.redirect('/missing-access')
     }
   },
 }

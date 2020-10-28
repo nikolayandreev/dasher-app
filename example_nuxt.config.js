@@ -3,7 +3,7 @@ export default {
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
-  target: 'server',
+  ssr: false,
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
@@ -44,7 +44,7 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/vuelidate.js',
     '~/plugins/v-lazy-image.js',
-    { src: '~/plugins/perfect-scrollbar.js', mode: 'client' },
+    '~/plugins/perfect-scrollbar.js',
   ],
   router: {
     middleware: ['auth'],
@@ -91,32 +91,53 @@ export default {
   },
   auth: {
     strategies: {
-      cookie: {
-        cookie: {
-          name: 'XSRF-TOKEN',
-        },
-      },
-      laravelSanctum: {
-        provider: 'laravel/sanctum',
-        url: process.env.API_URL,
+      local: {
         endpoints: {
-          login: { url: '/api/login' },
+          login: { url: '/api/login', method: 'POST', propertyName: 'token' },
           logout: { url: '/api/logout', method: 'DELETE' },
-          user: false,
-        },
-      },
-      autoFetchUser: false,
-      globalToken: false,
-      tokenRequired: false,
-      tokenType: false,
+          user: false
+        }
+      }
     },
     redirect: {
       login: '/signin',
-      logout: '/',
+      logout: '/signin',
       callback: '/signin',
       home: '/reservations',
     },
+    autoFetchUser: false,
+    tokenRequired: true,
+    tokenType: 'bearer',
+    globalToken: true,
   },
+  // auth: {
+  //   strategies: {
+  //     cookie: {
+  //       cookie: {
+  //         name: 'XSRF-TOKEN',
+  //       },
+  //     },
+  //     laravelSanctum: {
+  //       provider: 'laravel/sanctum',
+  //       url: process.env.API_URL,
+  //       endpoints: {
+  //         login: { url: '/api/login' },
+  //         logout: { url: '/api/logout', method: 'DELETE' },
+  //         user: false,
+  //       },
+  //     },
+  //     autoFetchUser: false,
+  //     globalToken: false,
+  //     tokenRequired: false,
+  //     tokenType: false,
+  //   },
+  //   redirect: {
+  //     login: '/signin',
+  //     logout: '/',
+  //     callback: '/signin',
+  //     home: '/reservations',
+  //   },
+  // },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

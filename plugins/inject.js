@@ -1,8 +1,8 @@
-export default (context, inject) => {
+export default ({ app }, inject) => {
   const permission = check => {
-    if (!context.store.$auth.loggedIn || !context.store.$auth.user.permissions) { return false }
+    if (!app.store.$auth.loggedIn || !app.store.$auth.user.permissions) { return false }
 
-    if (!context.store.$auth.user.permissions.includes(check)) { return false }
+    if (!app.store.$auth.user.permissions.includes(check)) { return false }
 
     return true
   }

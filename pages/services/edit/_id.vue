@@ -5,9 +5,9 @@
 <script>
 export default {
   layout: 'dashboard',
-  middleware(context) {
-    if (!context.$permission('services.edit')) {
-      context.redirect('/missing-access')
+  middleware(app) {
+    if (!app.$permission('services.edit')) {
+      app.redirect('/missing-access')
     }
   },
   validate({ params }) {

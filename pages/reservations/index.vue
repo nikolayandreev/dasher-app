@@ -31,12 +31,12 @@
 <script>
 export default {
   layout: 'dashboard',
-  middleware(context) {
+  middleware(app) {
     if (
-      !context.$permission('reservations.view') &&
-      !context.$permission('reservations.view.own')
+      !app.$permission('reservations.view') &&
+      !app.$permission('reservations.view.own')
     ) {
-      context.redirect('/missing-access')
+      app.redirect('/missing-access')
     }
   },
   computed: {

@@ -1,14 +1,17 @@
 <template>
-  <div class="container">
-    <div>
-      Home!
-    </div>
+  <div>
+    Redirecting...
   </div>
 </template>
 
 <script>
 export default {
-  auth: 'guest',
-  layout: 'default',
+  middleware(app) {
+    if (app.$auth.loggedIn) {
+      app.redirect('/reservations')
+    } else {
+      app.redirect('/signin')
+    }
+  },
 }
 </script>

@@ -24,9 +24,20 @@ import DashboardNavigation from '~/components/Dashboard/Header/DashboardNavigati
 import DashboardNavigationVendor from '~/components/Dashboard/Header/DashboardNavigationVendor'
 
 export default {
-  middleware({ store, redirect }) {
-    if (!store.state.auth.user.vendors) {
-      return redirect('/wizzard')
+  async middleware(app) {
+    if (!app.$auth.user || !app.$auth.user.id) {
+      await app.$axios
+        .$get('/api/user')
+        .then((res) => {
+          return app.$auth.setUser(res.data)
+        })
+        .catch((err) => {
+          return app.$auth.logout()
+        })
+    }
+
+    if (!app.$auth.user.vendors || !app.$auth.user.vendors.length) {
+      return app.redirect('/wizzard')
     }
   },
   components: {
@@ -55,22 +66,19 @@ export default {
     this.setSelectedVendor()
   },
   beforeCreate() {
-    if (process.client) {
-      if (this.$auth.loggedIn) {
-        if (this.$auth.user.vendors && this.$auth.user.vendors.length) {
-          let firstVendorId = this.$auth.user.vendors[0].id
-          if (!localStorage.getItem('dasher_vendor_id')) {
-            this.$store.dispatch('commitVendorId', firstVendorId)
-          } else {
-            this.$store.dispatch(
-              'commitVendorId',
-              parseInt(localStorage.getItem('dasher_vendor_id'))
-            )
-          }
-        }
+    if (this.$auth.user.vendors && this.$auth.user.vendors.length) {
+      let firstVendorId = this.$auth.user.vendors[0].id
+
+      if (!localStorage.getItem('dasher_vendor_id')) {
+        this.$store.dispatch('commitVendorId', firstVendorId)
       } else {
-        this.$store.dispatch('commitVendorId', null)
+        this.$store.dispatch(
+          'commitVendorId',
+          parseInt(localStorage.getItem('dasher_vendor_id'))
+        )
       }
+    } else {
+      this.$store.dispatch('commitVendorId', null)
     }
   },
 }

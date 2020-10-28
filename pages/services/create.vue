@@ -77,9 +77,9 @@
 <script>
 export default {
   layout: 'dashboard',
-  middleware(context) {
-    if (!context.$permission('services.create')) {
-      context.redirect('/missing-access')
+  middleware(app) {
+    if (!app.$permission('services.create')) {
+      app.redirect('/missing-access')
     }
   },
   data() {

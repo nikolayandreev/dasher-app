@@ -111,22 +111,37 @@ export default {
       this.mainError = null
 
       return this.$auth
-        .loginWith('laravelSanctum', {
+        .loginWith('local', {
           data: this.loginForm,
         })
         .then((res) => {
-          this.$store.commit('auth/SET', { key: 'user', value: res.data.data })
+          this.$axios.$get('/api/user').then((res) => {
+            this.$auth.setUser(res.data)
 
-          if (!localStorage.getItem('dasher_vendor_id')) {
-            this.$store.dispatch('commitVendorId', res.data.data.vendors[0].id)
-          } else {
-            this.$store.dispatch(
-              'commitVendorId',
-              localStorage.getItem('dasher_vendor_id')
-            )
-          }
+            // if (!localStorage.getItem('dasher_vendor_id')) {
+            //   this.$store.dispatch('commitVendorId', res.data.data.vendors[0].id)
+            // } else {
+            //   this.$store.dispatch(
+            //     'commitVendorId',
+            //     localStorage.getItem('dasher_vendor_id')
+            //   )
+            // }
 
-          return this.$router.push('/reservations')
+            return this.$router
+              .push('/reservations')
+              .catch((err) => console.error(err))
+          })
+
+          // if (!localStorage.getItem('dasher_vendor_id')) {
+          //   this.$store.dispatch('commitVendorId', res.data.data.vendors[0].id)
+          // } else {
+          //   this.$store.dispatch(
+          //     'commitVendorId',
+          //     localStorage.getItem('dasher_vendor_id')
+          //   )
+          // }
+
+          // return this.$router.push('/reservations')
         })
         .catch((err) => {
           this.formPending = false

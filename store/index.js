@@ -17,24 +17,6 @@ export const mutations = {
 };
 
 export const actions = {
-  async nuxtServerInit({ dispatch, commit }) {
-    await dispatch('fetchInitialData')
-  },
-  async fetchInitialData({ dispatch }) {
-    await dispatch('fetchUser');
-  },
-  async fetchUser({ commit }) {
-    await this.$axios.$get('/sanctum/csrf-cookie').then(res => {
-      this.$axios.$get('/api/user')
-        .then(res => {
-          commit('auth/SET', { key: 'user', value: res.data });
-          commit('auth/SET', { key: 'loggedIn', value: true });
-        })
-        .catch(err => {
-          commit('auth/SET', { key: 'loggedIn', value: false });
-        })
-    })
-  },
   commitVendor({ commit }, payload) {
     commit('setSelectedVendor', payload);
   },

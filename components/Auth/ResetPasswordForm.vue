@@ -3,51 +3,59 @@
     @submit.prevent="onSubmit"
     class="max-w-sm mx-auto"
   >
-    <div>
-      <h3 class="text-xl font-semibold text-center text-gray-900 sm:text-2xl">Възстанови паролата си</h3>
+    <div v-if="!passwordChanged">
+      <div>
+        <h3 class="text-xl font-semibold text-center text-gray-900 sm:text-2xl">Възстанови паролата си</h3>
+      </div>
+      <div class="w-full mt-4 form-group">
+        <label
+          for="resetPasswordNew"
+          class="block"
+        >Нова парола</label>
+        <input
+          id="resetPasswordNew"
+          type="password"
+          class="w-full"
+          placeholder="Избери нова парола"
+          v-model="resetPasswordForm.new_password"
+        />
+      </div>
+      <div class="w-full mt-4 form-group">
+        <label
+          for="resetPasswordConfirm"
+          class="block"
+        >Потвърди парола</label>
+        <input
+          id="resetPasswordConfirm"
+          type="password"
+          class="w-full"
+          placeholder="Избери нова парола"
+          v-model="resetPasswordForm.new_password_confirmed"
+        />
+        <span
+          class="block text-sm text-red-500 error"
+          v-if="errors && errors.error && errors.error.message"
+        >{{ errors.error.message }}</span>
+        <span
+          class="block text-sm text-red-500 error"
+          v-if="errors && errors.new_password"
+        >{{ errors.new_password[0] }}</span>
+      </div>
+      <div class="block mt-4 text-center">
+        <button
+          type="submit"
+          class="w-full py-3 text-white rounded-sm bg-brand-500"
+        >Възстанови парола</button>
+        <span class="block mt-4 text-sm text-gray-500">Размисли? <a
+            class="pb-px text-sm font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
+            href="/signup"
+            @click.prevent="switchForm"
+          >Обратно към Вход</a>
+        </span>
+      </div>
     </div>
     <div
-      class="w-full mt-4 form-group"
-      v-if="!passwordChanged"
-    >
-      <label
-        for="resetPasswordNew"
-        class="block"
-      >Нова парола</label>
-      <input
-        id="resetPasswordNew"
-        type="password"
-        class="w-full"
-        placeholder="Избери нова парола"
-        v-model="resetPasswordForm.new_password"
-      />
-    </div>
-    <div
-      class="w-full mt-4 form-group"
-      v-if="!passwordChanged"
-    >
-      <label
-        for="resetPasswordConfirm"
-        class="block"
-      >Потвърди парола</label>
-      <input
-        id="resetPasswordConfirm"
-        type="password"
-        class="w-full"
-        placeholder="Избери нова парола"
-        v-model="resetPasswordForm.new_password_confirmed"
-      />
-      <span
-        class="block text-sm text-red-500 error"
-        v-if="errors && errors.error && errors.error.message"
-      >{{ errors.error.message }}</span>
-      <span
-        class="block text-sm text-red-500 error"
-        v-if="errors && errors.new_password"
-      >{{ errors.new_password[0] }}</span>
-    </div>
-    <div
-      v-if="passwordChanged"
+      v-else
       class="py-5 mt-4 sm:flex-no-wrap"
     >
       <p class="w-full mt-5 text-base text-gray-600 sm:mt-0">
@@ -59,21 +67,6 @@
         >Обратно към Вход</a>
       </p>
 
-    </div>
-    <div
-      class="block mt-4 text-center"
-      v-if="!passwordChanged"
-    >
-      <button
-        type="submit"
-        class="w-full py-3 text-white rounded-sm bg-brand-500"
-      >Възстанови парола</button>
-      <span class="block mt-4 text-sm text-gray-500">Размисли? <a
-          class="pb-px text-sm font-semibold text-blue-600 border-b border-transparent hover:border-blue-600"
-          href="/signup"
-          @click.prevent="switchForm"
-        >Обратно към Вход</a>
-      </span>
     </div>
   </form>
 </template>

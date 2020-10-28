@@ -7,20 +7,7 @@
         alt="Dasher - Твоята система за управление"
       />
     </div>
-    <select
-      id="vendor"
-      v-if="user.vendors"
-      @change="changeVendor($event)"
-    >
-      <option
-        v-for="vendor in user.vendors"
-        :key="vendor.id"
-        :selected="parseInt(selectedVendor) === vendor.id"
-        :value="vendor.id"
-      >
-        {{ vendor.name }}
-      </option>
-    </select>
+
     <li>
       <a
         href="#"
@@ -34,8 +21,8 @@
 export default {
   computed: {
     selectedVendor() {
-      if (process.client && localStorage.getItem('dasher_vendor_id')) {
-        return localStorage.getItem('dasher_vendor_id')
+      if (localStorage.getItem('dasher_vendor_id')) {
+        return parseInt(localStorage.getItem('dasher_vendor_id'))
       }
       return this.$store.getters['getVendorId']
     },
@@ -45,8 +32,6 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem('dasher_vendor_id')
-
       this.$auth.logout().then((res) => {
         setTimeout(() => {
           return this.$router.push('/')

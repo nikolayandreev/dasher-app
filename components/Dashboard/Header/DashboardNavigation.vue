@@ -186,7 +186,7 @@ export default {
       return this.$store.getters['getActiveMenu']
     },
     selectedVendorId() {
-      if (process.client && localStorage.getItem('dasher_vendor_id')) {
+      if (localStorage.getItem('dasher_vendor_id')) {
         return parseInt(localStorage.getItem('dasher_vendor_id'))
       }
       return this.$store.getters['getVendorId']

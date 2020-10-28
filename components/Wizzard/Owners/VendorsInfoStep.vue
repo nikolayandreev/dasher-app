@@ -195,11 +195,13 @@ export default {
         this.$axios
           .$get(`/api/vendor/${this.vendorId}?with=address`)
           .then((res) => {
-            this.vendorForm.name = res.data.name
-            this.vendorForm.address = {
-              area_id: res.data.address.area_id,
-              street: res.data.address.street,
-              additional: res.data.address.additional,
+            if (res.data) {
+              this.vendorForm.name = res.data.name
+              this.vendorForm.address = {
+                area_id: res.data.address.area_id,
+                street: res.data.address.street,
+                additional: res.data.address.additional,
+              }
             }
           })
           .catch((err) => console.error(err))
