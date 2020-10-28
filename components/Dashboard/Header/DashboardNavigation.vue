@@ -185,17 +185,8 @@ export default {
     currentPath() {
       return this.$store.getters['getActiveMenu']
     },
-    selectedVendorId() {
-      if (localStorage.getItem('dasher_vendor_id')) {
-        return parseInt(localStorage.getItem('dasher_vendor_id'))
-      }
-      return this.$store.getters['getVendorId']
-    },
     user() {
       return this.$auth.user
-    },
-    selectedVendor() {
-      return this.$store.getters['getSelectedVendor']
     },
   },
   watch: {
@@ -209,10 +200,6 @@ export default {
     this.matchActive()
   },
   methods: {
-    changeVendor(event) {
-      this.$store.dispatch('commitVendorId', event.target.value)
-      localStorage.setItem('dasher_vendor_id', event.target.value)
-    },
     shouldOpenSubMenu(link) {
       if (link.active) {
         return link.opened && link.active
