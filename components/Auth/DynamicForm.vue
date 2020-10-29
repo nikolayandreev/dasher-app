@@ -1,10 +1,7 @@
 <template>
-  <div
-    class="block px-4 py-6 overflow-hidden sm:px-8"
-    v-if="loaded"
-  >
+  <div class="block px-4 py-6 overflow-hidden sm:px-8" v-if="loaded">
     <img
-      class="h-8 mx-auto mb-4"
+      class="h-8 mx-auto mb-6"
       src="/images/dasher-logo.svg"
       alt="Dasher - Твоята система за управление"
     />

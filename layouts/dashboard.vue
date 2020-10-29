@@ -36,7 +36,10 @@ export default {
         })
     }
 
-    if (!app.$auth.user.vendors || !app.$auth.user.vendors.length) {
+    if (
+      (!app.$auth.user.vendors || !app.$auth.user.subscribed) &&
+      app.$auth.user.type === 1
+    ) {
       return app.redirect('/wizzard')
     }
   },

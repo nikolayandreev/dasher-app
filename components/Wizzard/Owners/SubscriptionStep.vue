@@ -1,12 +1,13 @@
 <template>
   <div class="mt-8">
-    <div>
+    <div class="max-w-6xl mx-auto">
       <h1 class="text-xl font-display">Избери подходящ абонамент</h1>
       <p class="text-sm text-gray-600">
-        Можеш да спреш по всяко време, а също така и да продължиш от където и спрял.
+        Можеш да спреш по всяко време, а също така и да продължиш от където и
+        спрял.
       </p>
-      <div class="w-full my-4 form-group">
-        <div class="flex flex-row flex-wrap justify-evenly">
+      <div class="mt-10 form-group">
+        <div class="flex flex-row flex-wrap justify-around -mx-10">
           <SubscriptionButton
             :selectedSubscription="selectedSubscription"
             :subscription="plans.start"
@@ -20,29 +21,25 @@
           <span
             class="block text-sm text-red-500 error"
             v-if="errors && errors.plan"
-          >{{ errors.plan[0] }}</span>
+            >{{ errors.plan[0] }}</span
+          >
         </div>
-        <div class="mt-2 form-group">
-          <label for="card-element">
-            Дебитна или кредитна карта
-          </label>
-          <div
-            id="card-element"
-            class="w-full"
-            ref="card"
-          ></div>
+        <div class="mt-12 form-group">
+          <label for="card-element"> Дебитна или кредитна карта </label>
+          <div id="card-element" class="max-w-xl mt-2" ref="card"></div>
         </div>
         <span
           class="block text-sm text-red-500 error"
           v-if="errors && errors.stripe_token"
-        >{{ errors.stripe_token[0] }}</span>
+          >{{ errors.stripe_token[0] }}</span
+        >
       </div>
     </div>
 
     <div class="flex flex-row flex-no-wrap items-center justify-end pt-4 mt-4">
       <button
         :disabled="formPending"
-        :class="{pending: formPending}"
+        :class="{ pending: formPending }"
         @click="onSubmit"
         class="px-16 py-3 ml-10 font-medium tracking-wide transition duration-200 rounded-md text-brand-500 bg-brand-100 font-display hover:bg-brand-500 hover:text-white focus:shadow-outline-brand-600 focus:outline-none"
       >

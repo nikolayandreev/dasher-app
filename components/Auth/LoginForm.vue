@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit" class="max-w-sm mx-auto">
     <div>
-      <h3 class="text-xl font-semibold text-center text-gray-900 sm:text-2xl">
+      <h3 class="text-xl font-semibold text-left text-gray-900 sm:text-2xl">
         Добре дошъл, отново!
       </h3>
     </div>
