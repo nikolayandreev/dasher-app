@@ -1,10 +1,9 @@
 <template>
-  <div
-    class="box-border w-screen"
-    style="height: 93vh"
-  >
+  <div class="box-border w-screen" style="height: 93vh">
     <DashboardNavbar />
-    <div class="flex flex-row flex-no-wrap items-stretch w-full h-auto min-h-full">
+    <div
+      class="flex flex-row flex-no-wrap items-stretch w-full h-auto min-h-full"
+    >
       <nav class="w-1/6 bg-white">
         <DashboardNavigationVendor />
         <DashboardNavigation />
@@ -32,6 +31,7 @@ export default {
           return app.$auth.setUser(res.data)
         })
         .catch((err) => {
+          localStorage.removeItem('dasher_vendor_id')
           return app.$auth.logout()
         })
     }
@@ -49,6 +49,18 @@ export default {
     '$store.state.vendor_id': function () {
       this.setSelectedVendor()
     },
+    '$store.state.auth.loggedIn': function () {
+      localStorage.removeItem('dasher_vendor_id')
+    },
+  },
+  computed: {
+    selectedVendorId() {
+      if (this.$store.getters['getVendorId'])
+        return this.$store.getters['getVendorId']
+
+      if (localStorage.getItem('dasher_vendor_id'))
+        return parseInt(localStorage.getItem('dasher_vendor_id'))
+    },
   },
   methods: {
     setSelectedVendor() {
@@ -56,7 +68,7 @@ export default {
         return this.$store.dispatch(
           'commitVendor',
           this.$auth.user.vendors.find(
-            (elem) => elem.id === parseInt(this.$store.state.vendor_id)
+            (elem) => elem.id === parseInt(this.selectedVendorId)
           )
         )
       }
@@ -67,18 +79,17 @@ export default {
   },
   beforeCreate() {
     if (this.$auth.user.vendors && this.$auth.user.vendors.length) {
-      let firstVendorId = this.$auth.user.vendors[0].id
+      let vendorId = null
 
       if (!localStorage.getItem('dasher_vendor_id')) {
-        this.$store.dispatch('commitVendorId', firstVendorId)
+        vendorId = this.$auth.user.vendors
+          ? this.$auth.user.vendors[0].id
+          : null
       } else {
-        this.$store.dispatch(
-          'commitVendorId',
-          parseInt(localStorage.getItem('dasher_vendor_id'))
-        )
+        vendorId = parseInt(localStorage.getItem('dasher_vendor_id'))
       }
-    } else {
-      this.$store.dispatch('commitVendorId', null)
+
+      this.$store.dispatch('commitVendorId', vendorId)
     }
   },
 }

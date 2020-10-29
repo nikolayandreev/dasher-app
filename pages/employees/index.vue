@@ -21,12 +21,12 @@
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
                 class="flex-shrink-0 w-6 h-6 rounded-full"
-              >
-              <span class="block truncate">
-                Tom Cook
-              </span>
+              />
+              <span class="block truncate"> Tom Cook </span>
             </div>
-            <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <span
+              class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+            >
               <svg-icon
                 name="select-arrows"
                 class="w-5 h-5 text-gray-400"
@@ -68,11 +68,9 @@
                   src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
                   alt=""
                   class="flex-shrink-0 w-6 h-6 rounded-full"
-                >
+                />
                 <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-                <span class="block font-normal truncate">
-                  Wade Cooper
-                </span>
+                <span class="block font-normal truncate"> Wade Cooper </span>
               </div>
 
               <!--

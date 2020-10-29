@@ -2,15 +2,9 @@
   <client-only>
     <div class="flex flex-row flex-no-wrap items-start px-4 py-2 my-4">
       <div class="w-1/5 px-3 py-3 rounded-md bg-brand-100">
-        <svg-icon
-          name="store"
-          class="w-8 h-8 fill-current text-brand-500"
-        />
+        <svg-icon name="store" class="w-8 h-8 fill-current text-brand-500" />
       </div>
-      <div
-        class="w-4/5 pl-4"
-        v-if="selectedVendor"
-      >
+      <div class="w-4/5 pl-4" v-if="selectedVendor">
         <div class="flex flex-row flex-wrap items-center">
           <div
             :class="{
@@ -26,9 +20,6 @@
               <select
                 id="vendor"
                 class="pr-3 -ml-1 -mr-1 text-gray-900 appearance-none cursor-pointer font-display"
-                style="
-                  background-image: url('../assets/sprite/svg/chevron-down.svg');
-                "
                 @change="changeVendor($event)"
               >
                 <option
@@ -83,11 +74,26 @@
 <script>
 export default {
   computed: {
+    user() {
+      return this.$auth.user
+    },
     selectedVendor() {
       return this.$store.getters['getSelectedVendor']
     },
   },
+  watch: {
+    '$store.state.vendor_id': function (vendorId) {
+      if (this.user.vendors && this.user.vendors.length) {
+        this.fetchAddress(vendorId)
+      }
+    },
+  },
   methods: {
+    fetchAddress(vendorId) {
+      this.$axios
+        .$get(`/api/addresses/${vendorId}`)
+        .then((res) => console.log(res))
+    },
     changeVendor(event) {
       this.$store.dispatch('commitVendorId', event.target.value)
       localStorage.setItem('dasher_vendor_id', event.target.value)
