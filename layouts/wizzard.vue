@@ -5,5 +5,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  async middleware(app) {
+    if (!app.$auth.user || !app.$auth.user.id) {
+      await app.$axios
+        .$get('/api/user')
+        .then((res) => {
+          return app.$auth.setUser(res.data)
+        })
+        .catch((err) => {
+          return app.$auth.logout()
+        })
+    }
+  },
+}
 </script>

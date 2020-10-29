@@ -158,6 +158,7 @@ export default {
         this.formPending = false
       } else {
         this.storeVendorInfo()
+        return $nuxt.$emit('wizzard-switch', 3)
       }
     },
     storeVendorInfo() {
@@ -176,11 +177,9 @@ export default {
           this.$store.dispatch('wizzard/commitAddressId', res.data.address_id)
 
           this.$store.dispatch('wizzard/commitStep', {
-            step: 1,
+            step: 2,
             status: 'finished',
           })
-
-          return $nuxt.$emit('wizzard-switch', 2)
         })
         .catch((err) => {
           this.formPending = false

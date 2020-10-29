@@ -90,7 +90,7 @@ export default {
         status: 'finished',
       })
 
-      return $nuxt.$emit('wizzard-switch', 4)
+      return $nuxt.$emit('wizzard-switch', 5)
     },
   },
 }

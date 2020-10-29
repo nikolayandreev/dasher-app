@@ -116,7 +116,7 @@ export default {
     onSubmit() {
       this.formPending = true
       this.storeVendorWorktime()
-      return $nuxt.$emit('wizzard-switch', 3)
+      return $nuxt.$emit('wizzard-switch', 4)
     },
     storeVendorWorktime() {
       this.$axios
@@ -129,14 +129,13 @@ export default {
           this.worktime = res.data
 
           this.$store.dispatch('wizzard/commitStep', {
-            step: 2,
+            step: 3,
             status: 'finished',
           })
         })
         .catch((err) => {
           this.formPending = false
           this.worktime = null
-          console.error(err)
         })
     },
     fetchVendorWorktime() {

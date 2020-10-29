@@ -1,23 +1,23 @@
 <template functional>
-  <button
-    class="w-full px-4 py-3 text-left bg-purple-100 shadow-md sm:w-3/6 focus:outline-none"
-    :class="{'bg-purple-200 transition-colors duration-300': props.selectedSubscription === props.subscription}"
-    @click="listeners.click"
+  <a
+    href="#"
+    class="relative inline-block px-6 py-4 text-center text-gray-800 transition-all duration-200 transform rounded-md shadow-xs sm:w-5/12 focus:outline-none"
+    :class="{
+      'shadow-md bg-white scale-105': props.selectedSubscription === props.subscription,
+      'bg-gray-200  scale-95': props.selectedSubscription !== props.subscription
+    }"
+    @click.prevent="listeners.click"
   >
-    <h4 class="block text-xl font-semibold text-gray-800">{{ props.subscription.name }}</h4>
-    <span
-      class="block text-sm"
-      v-if="props.subscription.trial"
-    >14 дни безплатно!</span>
-    <span
-      class="block text-sm"
-      v-if="!props.subscription.trial"
-    >Неограничено СМС известяване</span>
-    <a
-      class="block mt-3 text-sm text-gray-600"
-      href="#"
-      :title="`Научи повече за ${ props.subscription.name }`"
-    >Научи повече за {{ props.subscription.name }}</a>
-    <span class="block mt-px text-lg font-medium text-gray-800 font-display">Само за: {{ props.subscription.price }}лв. / месец</span>
-  </button>
+    <h4 class="block text-2xl font-medium text-center">{{ props.subscription.name }}</h4>
+    <p
+      class="my-3 text-sm leading-5 tracking-tight text-gray-600"
+      v-if="props.subscription.description"
+    >
+      {{ props.subscription.description }}
+    </p>
+
+    <span class="block text-4xl font-normal font-display text-brand-500">{{ props.subscription.price }}
+      <span class="-ml-2 text-sm font-normal text-gray-800">лв./месец</span>
+    </span>
+  </a>
 </template>

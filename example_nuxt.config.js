@@ -110,34 +110,6 @@ export default {
     tokenType: 'bearer',
     globalToken: true,
   },
-  // auth: {
-  //   strategies: {
-  //     cookie: {
-  //       cookie: {
-  //         name: 'XSRF-TOKEN',
-  //       },
-  //     },
-  //     laravelSanctum: {
-  //       provider: 'laravel/sanctum',
-  //       url: process.env.API_URL,
-  //       endpoints: {
-  //         login: { url: '/api/login' },
-  //         logout: { url: '/api/logout', method: 'DELETE' },
-  //         user: false,
-  //       },
-  //     },
-  //     autoFetchUser: false,
-  //     globalToken: false,
-  //     tokenRequired: false,
-  //     tokenType: false,
-  //   },
-  //   redirect: {
-  //     login: '/signin',
-  //     logout: '/',
-  //     callback: '/signin',
-  //     home: '/reservations',
-  //   },
-  // },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

@@ -64,34 +64,40 @@
 export default {
   data() {
     return {
-      step: 'info',
+      step: 'subscription',
       direction: 'right',
       index: 1,
       loaded: false,
       tabs: [
         {
+          key: 'subscription',
+          name: 'Абонамент',
+          icon: 'credit-card-outline',
+          index: 1,
+        },
+        {
           key: 'info',
           name: 'Информация за обект',
           icon: 'information-outline',
-          index: 1,
+          index: 2,
         },
         {
           key: 'worktime',
           name: 'Работно време',
           icon: 'clock-outline',
-          index: 2,
+          index: 3,
         },
         {
           key: 'employees',
           name: 'Добави служители',
           icon: 'account-group-outline',
-          index: 3,
+          index: 4,
         },
         {
           key: 'settings',
           name: 'Настройки',
           icon: 'cog-outline',
-          index: 4,
+          index: 5,
         },
       ],
     }
@@ -104,6 +110,7 @@ export default {
     },
   },
   components: {
+    subscription: () => import('~/components/Wizzard/Owners/SubscriptionStep'),
     info: () => import('~/components/Wizzard/Owners/VendorsInfoStep'),
     worktime: () => import('~/components/Wizzard/Owners/VendorsWorktimeStep'),
     employees: () => import('~/components/Wizzard/Owners/VendorsEmployeesStep'),

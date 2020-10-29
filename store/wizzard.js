@@ -4,6 +4,7 @@ export const state = () => ({
     { step: 2, status: 'pending' },
     { step: 3, status: 'pending' },
     { step: 4, status: 'pending' },
+    { step: 5, status: 'pending' },
   ],
   areas: null,
   vendor_id: null,

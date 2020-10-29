@@ -14,5 +14,16 @@
 </template>
 
 <script>
-export default {}
+export default {
+  // head() {
+  //   return {
+  //     script: [
+  //       {
+  //         src: 'https://js.stripe.com/v3/',
+  //         defer: true,
+  //       },
+  //     ],
+  //   }
+  // },
+}
 </script>
